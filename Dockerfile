@@ -13,5 +13,4 @@ RUN ./qiniu_uploader
 
 FROM nginx:latest
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY qiniu_uploader /etc/nginx/nginx.conf
 COPY --from=front /home/dist /var/www/mo2front/
