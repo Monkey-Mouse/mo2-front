@@ -8,6 +8,7 @@ RUN npm install
 RUN npm run build
 RUN chmod 777 ./qiniu_uploader
 ENV qiniuak=$qiniuak
+ENV GIN_MODE=release
 ENV qiniusk=$qiniusk
 RUN ./qiniu_uploader
 
