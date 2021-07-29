@@ -1,12 +1,11 @@
-ARG qiniuak
-ARG qiniusk
-
 FROM node:16.5 AS front
 WORKDIR /home/mo2front
 COPY . .
 RUN npm install
 RUN npm run build
 RUN chmod 777 ./qiniu_uploader
+ARG qiniuak
+ARG qiniusk
 ENV qiniuak=$qiniuak
 ENV GIN_MODE=release
 ENV qiniusk=$qiniusk
