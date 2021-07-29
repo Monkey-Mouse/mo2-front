@@ -3,6 +3,8 @@ WORKDIR /home/mo2front
 COPY . .
 RUN npm install
 RUN npm run build
+RUN chmod 777 ./qiniu_uploader
+RUN ./qiniu_uploader
 
 FROM nginx:latest
 COPY nginx.conf /etc/nginx/nginx.conf
