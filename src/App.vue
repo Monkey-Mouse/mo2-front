@@ -22,55 +22,57 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <v-expand-transition v-if="this.$route.name !== 'Search Article'">
-        <v-autocomplete
-          color="secondary"
-          v-if="search"
-          autofocus
-          @blur="search = false"
-          class="pa-1"
-          style="max-width: 300px"
-          label="Search"
-          clearable
-          :search-input.sync="searchString"
-          hide-details="auto"
-          @keydown="keyDown"
-          :items="prompts"
-          no-filter
-          item-text="title"
-          item-value="id"
-        >
-          <template v-slot:item="{ item }">
-            <v-card
-              v-on:click.prevent
-              v-on:click.stop
-              class="ma-3"
-              style="max-width: 300px; width: 100%"
-              @click="
-                $router.push('/article/' + item.id);
-                searchString = '';
-                search = false;
-              "
-            >
-              <div class="d-flex flex-no-wrap justify-space-between">
-                <div>
-                  <v-card-title
-                    class="headline"
-                    v-html="item.title"
-                  ></v-card-title>
+        <v-form>
+          <v-autocomplete
+            color="secondary"
+            v-if="search"
+            autofocus
+            @blur="search = false"
+            class="pa-1"
+            style="max-width: 300px"
+            label="Search"
+            clearable
+            :search-input.sync="searchString"
+            hide-details="auto"
+            @keydown="keyDown"
+            :items="prompts"
+            no-filter
+            item-text="title"
+            item-value="id"
+          >
+            <template v-slot:item="{ item }">
+              <v-card
+                v-on:click.prevent
+                v-on:click.stop
+                class="ma-3"
+                style="max-width: 300px; width: 100%"
+                @click="
+                  $router.push('/article/' + item.id);
+                  searchString = '';
+                  search = false;
+                "
+              >
+                <div class="d-flex flex-no-wrap justify-space-between">
+                  <div>
+                    <v-card-title
+                      class="headline"
+                      v-html="item.title"
+                    ></v-card-title>
 
-                  <v-card-subtitle
-                    class="ellipsis-1"
-                    v-html="item.description"
-                  ></v-card-subtitle>
+                    <v-card-subtitle
+                      class="ellipsis-1"
+                      v-html="item.description"
+                    ></v-card-subtitle>
+                  </div>
+
+                  <v-avatar class="ma-3" size="64" tile>
+                    <v-img :src="item.cover"></v-img>
+                  </v-avatar>
                 </div>
-
-                <v-avatar class="ma-3" size="64" tile>
-                  <v-img :src="item.cover"></v-img>
-                </v-avatar>
-              </div>
-            </v-card>
-          </template>
-        </v-autocomplete>
+              </v-card>
+            </template>
+          </v-autocomplete>
+        </v-form>
       </v-expand-transition>
       <v-btn
         v-if="!isUser && !search"
