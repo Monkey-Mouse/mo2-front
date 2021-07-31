@@ -37,7 +37,7 @@ export async function GetUserData(uid: string): Promise<User> {
     return re.data[0]
 }
 export async function GetUserDatas(uids: string[]): Promise<UserListData[]> {
-    if (!uids||uids.length === 0) {
+    if (!uids || uids.length === 0) {
         return [];
     }
     let re = await axios.get<UserListData[]>('/api/accounts/listBrief?id=' + uids.filter(onlyUnique).join('&id='));
@@ -68,12 +68,12 @@ export const GetOwnArticles = async (query: { page: number; pageSize: number; dr
 }
 
 export const GetUserArticles = async (query: { page: number; pageSize: number; draft: boolean; id: string; }) => {
-    return await GetXXXArticles({page:query.page,pageSize:query.pageSize,draft:query.draft,id:query.id,field:"author_id"})
+    return await GetXXXArticles({ page: query.page, pageSize: query.pageSize, draft: query.draft, id: query.id, field: "author_id" })
 }
 export const GetProjectArticles = async (query: { page: number; pageSize: number; id: string; }) => {
-    return await GetXXXArticles({page:query.page,pageSize:query.pageSize,draft:false,id:query.id,field:"project_id"})
+    return await GetXXXArticles({ page: query.page, pageSize: query.pageSize, draft: false, id: query.id, field: "project_id" })
 }
-export const GetXXXArticles = async (query: { page: number; pageSize: number; draft: boolean; id: string;field:string }) => {
+export const GetXXXArticles = async (query: { page: number; pageSize: number; draft: boolean; id: string; field: string }) => {
     return (await axios.get<BlogBrief[]>('/api/blogs/find' + ParseQuery(query))).data
 }
 export async function DeleteArticle(id: string, query: { draft: boolean }) {
@@ -141,6 +141,13 @@ export async function ScoreBlog(b: { score: number, target: string }) {
 export async function IsScoredBlog(b: { score: number, target: string }) {
     return (await axios.post<boolean>('/api/blogs/isscored', b)).data
 }
-export async function SearchUser(query:{page: number; pagesize: number;query:string}) {
-    return (await axios.get<{userName:string;'settings.avatar':string;id:string;email:string}[]>('/api/accounts'+ParseQuery(query))).data
+export async function SearchUser(query: { page: number; pagesize: number; query: string }) {
+    return (await axios.get<{ userName: string; 'settings.avatar': string; id: string; email: string }[]>('/api/accounts' + ParseQuery(query))).data
+}
+
+export async function GetUserDatasByEmail(emails: string[]) {
+    return (await axios.post<UserListData[]>('/api/accounts/ids', { Emails: emails })).data
+}
+export async function AddActiveAccounts(query: { pass: string }, accs: { email: string; password: string; userName: string }[]) {
+    return (await axios.post<UserListData[]>('/api/accounts/addactive' + ParseQuery(query), { Accs: accs })).data
 }

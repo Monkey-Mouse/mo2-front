@@ -1,6 +1,13 @@
 <template>
   <div>
     <!-- <v-emoji-picker /> -->
+    <input
+      ref="in"
+      type="file"
+      accept=".csv"
+      @change="selectUsers"
+      style="display: none"
+    />
     <MO2Dialog
       :validator="validator"
       :inputProps="inputProps"
@@ -55,6 +62,11 @@
             {{ displayUser.name }}
             <v-icon v-if="ownPage && !githubAccount" @click="edit = true"
               >mdi-account-edit</v-icon
+            >
+            <v-icon
+              v-if="ownPage && user.roles.includes('GeneralAdmin')"
+              @click="addUsers"
+              >mdi-account-multiple-plus</v-icon
             >
           </h1>
           <h4 class="subheading">{{ displayUser.description }}</h4>
@@ -147,6 +159,7 @@
 <script lang="ts">
 import { BlankUser, BlogBrief, User, InputProp, Project } from "@/models";
 import {
+  AddActiveAccounts,
   AddMore,
   addQuery,
   AutoLoader,
@@ -172,6 +185,7 @@ import Cropper from "../components/ImageCropper.vue";
 import Category from "../components/Category.vue";
 import ProjectItem from "../components/ProjectItem.vue";
 import { IEmoji } from "node_modules/v-emoji-picker/lib/models/Emoji";
+import Papa from "papaparse";
 
 const githubRule = helpers.regex(
   "github",
@@ -295,7 +309,27 @@ export default class Account extends Vue implements AutoLoader<BlogBrief> {
       message: "设置主页字体颜色",
     },
   };
-
+  selectUsers(ev) {
+    const file = ev.target.files[0];
+    Papa.parse<string[]>(file, {
+      complete: (re) => {
+        const datas = re.data;
+        const us: { email: string; password: string; userName: string }[] = [];
+        for (let index = 0; index < datas.length; index++) {
+          const element = datas[index];
+          us.push({
+            email: element[0] + "@hust.edu.cn",
+            userName: element[0],
+            password: "",
+          });
+        }
+        AddActiveAccounts({ pass: "a12345678," }, us);
+      },
+    });
+  }
+  addUsers() {
+    (this.$refs["in"] as HTMLInputElement).click();
+  }
   async changeStatus(emoji: IEmoji) {
     this.user.settings.status = emoji.data;
     await UpdateUserInfo(this.user);

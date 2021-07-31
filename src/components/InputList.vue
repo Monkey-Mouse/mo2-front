@@ -70,6 +70,8 @@
         <v-autocomplete
           v-else-if="value['type'] === 'select'"
           v-model="model[key]"
+          :append-outer-icon="value['icon']"
+          @click:append-outer="() => iconClick(value)"
           :items="value['options']"
           deletable-chips
           chips
@@ -136,6 +138,7 @@
           :label="value.label"
           :multiple="value.multiple"
           :messages="value.message"
+          :append-outer-icon="value['icon']"
         />
         <v-file-input
           v-else-if="value['type'] === 'file'"
@@ -143,6 +146,7 @@
           v-model="model[key]"
           :rules="buildValidationRoles(key)"
           :accept="value['accept']"
+          :append-outer-icon="value['icon']"
         >
           <v-icon
             class="clickable"
@@ -222,6 +226,11 @@ export default class InputList extends Vue {
   }
   mounted() {
     this.$emit("update:anyError", this.$v.$anyError);
+  }
+  iconClick(value) {
+    if (value["iconClick"]) {
+      value["iconClick"](value);
+    }
   }
   buildValidationRoles(prop: string) {
     const errmsgs = this.inputProps[prop].errorMsg;

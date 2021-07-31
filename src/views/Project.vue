@@ -1,5 +1,7 @@
 <template>
   <v-container >
+    <input ref="in" type="file" accept=".csv" @change="selectMembers" style="display:none"/>
+    <input ref="in1" type="file" accept=".csv" @change="selectManagers" style="display:none"/>
     <MO2Dialog
       :confirm="updateGroup"
       :confirmText="'Update'"
@@ -7,6 +9,7 @@
       :inputProps="groupProps"
       :validator="groupValidator"
       :show.sync="showGroup"
+      ref="update"
     />
     <v-row class=" pt-16">
       <v-col class=" text-center">
@@ -70,7 +73,8 @@
     </v-row>
     <v-container >
       <v-row>
-        <v-col class="text-h4 text-center">Members</v-col>
+        <v-col class="text-h4 text-center">Members
+        </v-col>
       </v-row>
       <v-row v-if="members.length>0" class="mb-3">
         <v-col v-for="(v,i) in members" :key="i">
@@ -130,6 +134,7 @@ import {
   GetProjectArticles,
   GetUserData,
   GetUserDatas,
+  GetUserDatasByEmail,
   GetUserInfoAsync,
   JoinProject,
   ListProject,
@@ -140,6 +145,7 @@ import BlogSkeleton from "../components/BlogTimeLineSkeleton.vue";
 import UserItem from "../components/UserItem.vue";
 import { required } from "vuelidate/lib/validators";
 import { Prop, Watch } from "vue-property-decorator";
+import Papa from "papaparse";
 const lazySearcher = new LazyExecutor();
 const dic: { [key: string]: Option } = {};
 @Component({
@@ -164,80 +170,137 @@ export default class ProjectPage extends Vue implements AutoLoader<BlogBrief> {
   showGroup = false;
   managers: UserListData[] = [];
   members: UserListData[] = [];
-  groupValidator = {
-    name: {
-      required: required,
-    },
-    description: {
-      required: required,
-    },
-    tags: {
-      required: required,
-    },
-    MemberIDs: {},
-    ManagerIDs: {},
-  };
-  groupProps: { [name: string]: InputProp } = {
-    name: {
-      errorMsg: {
-        required: "组名不可为空",
+  groupValidator = {};
+  groupProps: { [name: string]: InputProp } = {};
+  memberPromise: Promise<string[]>;
+
+  buildProps() {
+    const that = this;
+    this.groupValidator = {
+      name: {
+        required: required,
       },
-      label: "Name",
-      default: "",
-      icon: "mdi-rename-box",
-      col: 12,
-      type: "text",
-    },
-    description: {
-      errorMsg: {
-        required: "组描述不可为空",
+      description: {
+        required: required,
       },
-      label: "Description",
-      default: "",
-      icon: "mdi-text",
-      col: 12,
-      type: "textarea",
-    },
-    tags: {
-      errorMsg: {
-        required: "标签不可为空",
+      tags: {
+        required: required,
       },
-      label: "Tags",
-      default: [],
-      icon: "mdi-tag-multiple",
-      col: 12,
-      type: "combo",
-      options: ["课程", "娱乐", "互联网", "教育"],
-      message: "enter添加自定义tag",
-      multiple: true,
-    },
-    MemberIDs: {
-      errorMsg: {},
-      label: "Members",
-      default: [],
-      icon: "mdi-account-group",
-      col: 12,
-      type: "select",
-      options: [],
-      multiple: true,
-      showAvatar: true,
-      onChange: BuildOnUserChange(lazySearcher, dic),
-      filter: UserFilter,
-    },
-    ManagerIDs: {
-      errorMsg: {},
-      label: "Managers",
-      default: [],
-      icon: "mdi-account-supervisor",
-      col: 12,
-      type: "select",
-      options: [],
-      multiple: true,
-      showAvatar: true,
-      onChange: BuildOnUserChange(lazySearcher, dic),
-      filter: UserFilter,
-    },
-  };
+      MemberIDs: {},
+      ManagerIDs: {},
+    };
+    this.groupProps = {
+      name: {
+        errorMsg: {
+          required: "组名不可为空",
+        },
+        label: "Name",
+        default: "",
+        icon: "mdi-rename-box",
+        col: 12,
+        type: "text",
+      },
+      description: {
+        errorMsg: {
+          required: "组描述不可为空",
+        },
+        label: "Description",
+        default: "",
+        icon: "mdi-text",
+        col: 12,
+        type: "textarea",
+      },
+      tags: {
+        errorMsg: {
+          required: "标签不可为空",
+        },
+        label: "Tags",
+        default: [],
+        icon: "mdi-tag-multiple",
+        col: 12,
+        type: "combo",
+        options: ["课程", "娱乐", "互联网", "教育"],
+        message: "enter添加自定义tag",
+        multiple: true,
+      },
+      ManagerIDs: {
+        errorMsg: {},
+        label: "Managers",
+        default: [],
+        icon: "mdi-account-supervisor",
+        col: 12,
+        type: "select",
+        options: [],
+        multiple: true,
+        showAvatar: true,
+        onChange: BuildOnUserChange(lazySearcher, dic),
+        filter: UserFilter,
+        iconClick: (value) => {
+          that.addManagersByFile();
+        },
+      },
+      MemberIDs: {
+        errorMsg: {},
+        label: "Members",
+        default: [],
+        icon: "mdi-account-group",
+        col: 12,
+        type: "select",
+        options: [],
+        multiple: true,
+        showAvatar: true,
+        onChange: BuildOnUserChange(lazySearcher, dic),
+        filter: UserFilter,
+        iconClick: (value) => {
+          that.addMembersByFile();
+        },
+      },
+    };
+  }
+  get dialog() {
+    return this.$refs["update"] as MO2Dialog;
+  }
+  addManagersByFile() {
+    (this.$refs["in1"] as HTMLInputElement).click();
+  }
+  addMembersByFile() {
+    (this.$refs["in"] as HTMLInputElement).click();
+  }
+  selectManagers(ev) {
+    this.selectXXX(ev, "ManagerIDs");
+  }
+  selectXXX(ev, field: string) {
+    const file = ev.target.files[0];
+    const that = this;
+    Papa.parse(file, {
+      complete: async function (re) {
+        const results = re.data as string[];
+        console.log(results);
+        const arr: string[] = [];
+        for (let index = 0; index < results.length; index++) {
+          const element = results[index];
+          arr.push(element[0]);
+        }
+        const infos = await GetUserDatasByEmail(arr);
+        const vs: string[] = that.dialog.getModel()[field];
+        infos.map((v) => {
+          (that.groupProps[field].options as Option[]).push({
+            text: v.name,
+            value: v.id,
+            avatar: v.settings?.avatar,
+          });
+          vs.push(v.id);
+        });
+
+        that.dialog.setModel({
+          field: vs,
+        });
+      },
+    });
+  }
+  selectMembers(ev) {
+    this.selectXXX(ev, "MemberIDs");
+  }
   async updateGroup(p: Project): Promise<{ err: string; pass: boolean }> {
     try {
       p.ID = this.proj.ID;
@@ -265,7 +328,41 @@ export default class ProjectPage extends Vue implements AutoLoader<BlogBrief> {
     }
     return p;
   }
+
+  @Watch("proj.ManagerIDs")
+  managerChange() {
+    const re = this.proj;
+    GetUserDatas(re.ManagerIDs).then((managers) => {
+      this.managers = managers;
+      this.groupProps.ManagerIDs.default = re.ManagerIDs ?? [];
+      for (let index = 0; index < managers.length; index++) {
+        const u = managers[index];
+        dic[u.id] = { text: u.name, value: u.id, avatar: u.settings?.avatar };
+      }
+      this.groupProps.ManagerIDs.options = managers.map((u) => {
+        return { text: u.name, value: u.id, avatar: u.settings?.avatar };
+      });
+    });
+  }
+
+  @Watch("proj.MemberIDs")
+  memberChange() {
+    const re = this.proj;
+    GetUserDatas(re.MemberIDs).then((members) => {
+      this.members = members;
+      for (let index = 0; index < members.length; index++) {
+        const u = members[index];
+        dic[u.id] = { text: u.name, value: u.id, avatar: u.settings?.avatar };
+      }
+      this.groupProps.MemberIDs.default = re.MemberIDs ?? [];
+      this.groupProps.MemberIDs.options = members.map((u) => {
+        return { text: u.name, value: u.id, avatar: u.settings?.avatar };
+      });
+    });
+  }
+
   created() {
+    this.buildProps();
     GetProject(this.$route.params["id"]).then((re) => {
       this.proj = re;
       this.groupProps.name.default = this.proj.Name;
@@ -273,28 +370,6 @@ export default class ProjectPage extends Vue implements AutoLoader<BlogBrief> {
       this.groupProps.tags.default = this.proj.Tags;
       GetUserData(this.proj.OwnerID).then((u) => {
         this.owner = u;
-      });
-      GetUserDatas(re.ManagerIDs).then((managers) => {
-        this.managers = managers;
-        this.groupProps.ManagerIDs.default = re.ManagerIDs ?? [];
-        for (let index = 0; index < managers.length; index++) {
-          const u = managers[index];
-          dic[u.id] = { text: u.name, value: u.id, avatar: u.settings?.avatar };
-        }
-        this.groupProps.ManagerIDs.options = managers.map((u) => {
-          return { text: u.name, value: u.id, avatar: u.settings?.avatar };
-        });
-      });
-      GetUserDatas(re.MemberIDs).then((members) => {
-        this.members = members;
-        for (let index = 0; index < members.length; index++) {
-          const u = members[index];
-          dic[u.id] = { text: u.name, value: u.id, avatar: u.settings?.avatar };
-        }
-        this.groupProps.MemberIDs.default = re.MemberIDs ?? [];
-        this.groupProps.MemberIDs.options = members.map((u) => {
-          return { text: u.name, value: u.id, avatar: u.settings?.avatar };
-        });
       });
     });
     GetProjectArticles({

@@ -87,6 +87,9 @@ export default class Mo2Dialog extends Vue {
       this.confirmerr = err;
     }
   }
+  getModel() {
+    return (this.$refs["inputs"] as InputList).Model;
+  }
   setModel(model: any) {
     console.log(model);
     setTimeout(() => {
