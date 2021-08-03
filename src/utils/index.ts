@@ -47,9 +47,13 @@ export function GetInitials(name: string) {
 
     let initials = [...name.matchAll(rgx)] || [];
 
-    return (
+    let ini = (
         (initials.shift()?.[1] || '') + (initials.pop()?.[1] || '')
     ).toUpperCase();
+    if (ini.length === 0) {
+        ini = name[0].toUpperCase();
+    }
+    return ini;
 }
 export function GetErrorMsg(apiError: any) {
     const err = (apiError as AxiosError<ApiError>);
@@ -96,13 +100,13 @@ export async function addQuery(that: Vue, key: string, val: string | string[]) {
 }
 interface App {
     refresh: boolean,
-    showLogin: (email:string) => void,
+    showLogin: (email: string) => void,
     Prompt(msg: string,
         timeout: number): void,
     isUser: boolean,
     showGroup: boolean,
-    logOut:()=>Promise<void>,
-    userChanged:()=>void
+    logOut: () => Promise<void>,
+    userChanged: () => void
 }
 var app: App;
 export function SetApp(params: App) {
@@ -122,7 +126,7 @@ export function NewGroup() {
     }
     app.showGroup = true
 }
-export function ShowLogin(email:string=undefined) {
+export function ShowLogin(email: string = undefined) {
     app.showLogin(email)
 }
 export function Prompt(msg: string, timeout: number) {

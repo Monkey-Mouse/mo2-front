@@ -146,7 +146,6 @@
           v-model="model[key]"
           :rules="buildValidationRoles(key)"
           :accept="value['accept']"
-          :append-outer-icon="value['icon']"
         >
           <v-icon
             class="clickable"

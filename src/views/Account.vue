@@ -73,14 +73,14 @@
           <h4 v-if="displayUser.email.indexOf('@') > 0" class="subtitle-2 mb-4">
             {{ displayUser.email }}&nbsp;<v-icon small> mdi-email</v-icon>
           </h4>
-          <v-row v-if="displayUser.settings.bio">
+          <v-row v-if="displayUser.settings && displayUser.settings.bio">
             <v-col lg="8" offset-lg="2">
               <h4>
                 {{ displayUser.settings.bio }}
               </h4></v-col
             >
           </v-row>
-          <v-row v-if="displayUser.settings.location">
+          <v-row v-if="displayUser.settings && displayUser.settings.location">
             <v-col lg="8" offset-lg="2">
               <h4>
                 {{ displayUser.settings.location
@@ -88,7 +88,7 @@
               </h4></v-col
             >
           </v-row>
-          <v-row v-if="displayUser.settings.github">
+          <v-row v-if="displayUser.settings && displayUser.settings.github">
             <v-col lg="8" offset-lg="2">
               <h4>
                 <a target="_blank" :href="displayUser.settings.github">
@@ -372,6 +372,7 @@ export default class Account extends Vue implements AutoLoader<BlogBrief> {
   }) {
     try {
       this.user.name = name;
+      this.user.settings = this.user.settings ?? {};
       this.user.settings.bio = bio;
       this.user.settings.location = location;
       this.user.settings.github = github;
