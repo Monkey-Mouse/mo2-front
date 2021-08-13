@@ -28,16 +28,25 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Project.vue')
   },
   {
+    path: '/projects',
+    name: 'Projects',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Projects.vue')
+  },
+  {
     path: '/account/:id?',
     name: 'Account',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Account.vue'),
-    beforeEnter: (to,from,next)=>{
+    /* 路由守卫 */
+    beforeEnter: (to, from, next) => {
       if (to.params['id']) {
         next();
-      } else LoginBeforeNav(to,from,next);
+      } else LoginBeforeNav(to, from, next);
     }
   },
   {

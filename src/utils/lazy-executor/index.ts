@@ -1,3 +1,4 @@
+/* 延时触发器 */
 export class LazyExecutor {
     private i = 0;
     private f: () => void;
