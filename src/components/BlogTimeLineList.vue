@@ -245,10 +245,12 @@ export default class BlogTimeLineList extends Vue {
     const ids = this.blogs.slice(this.prevlen).map((v, i, a) => v.authorId);
     GetUserDatas(ids).then((data) => {
       const dic: any = {};
+      /* {id: userObj} */
       for (let index = 0; index < data.length; index++) {
         const element = data[index];
         dic[element.id] = element;
       }
+      /* 将获取的用户信息赋值给blogs(外层的article) */
       for (let index = this.prevlen; index < this.blogs.length; index++) {
         this.blogs[index].userName = dic[this.blogs[index].authorId].name;
         this.blogs[index].user = dic[this.blogs[index].authorId];

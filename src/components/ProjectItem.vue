@@ -1,5 +1,12 @@
 <template>
-  <v-card :to="'/project/' + project.ID" class="mx-auto" width="300px" outlined>
+  <v-card
+    :to="'/project/' + project.ID"
+    class="mx-auto"
+    :width="this.$vuetify.breakpoint.smAndDown ? '70vw' : '50vw'"
+    outlined
+    light
+    :style="'color:' + color + '!important'"
+  >
     <v-list-item three-line>
       <v-list-item-avatar tile size="80" color="grey">{{
         initials
@@ -26,6 +33,8 @@ import { Prop, Watch } from "vue-property-decorator";
 export default class ProjectItem extends Vue {
   @Prop()
   project: Project;
+  @Prop()
+  color: string;
   get initials(): string {
     try {
       return GetInitials(this.project.Name);
@@ -35,3 +44,8 @@ export default class ProjectItem extends Vue {
   }
 }
 </script>
+<style lang="scss" scoped>
+.theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+  color: inherit !important;
+}
+</style>
