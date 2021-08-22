@@ -7,11 +7,6 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
     path: '/about',
     name: 'About',
     // route level code-splitting
@@ -26,14 +21,6 @@ const routes: Array<RouteConfig> = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Project.vue')
-  },
-  {
-    path: '/projects',
-    name: 'Projects',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Projects.vue')
   },
   {
     path: '/account/:id?',
@@ -117,6 +104,33 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/PageNotFound.vue')
   }
 ]
+if (window.location.hostname.includes('kshub')) {
+  routes.push({
+    path: '/',
+    name: 'Projects',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Projects.vue')
+  }, {
+    path: '/articles',
+    name: 'Home',
+    component: Home
+  })
+}else{
+  routes.push({
+    path: '/projects',
+    name: 'Projects',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Projects.vue')
+  }, {
+    path: '/',
+    name: 'Home',
+    component: Home
+  })
+}
 
 const router = new VueRouter({
   mode: 'history',
