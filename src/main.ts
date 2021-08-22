@@ -10,6 +10,7 @@ import sanitizeHtml from 'sanitize-html'
 import '@mdi/font/css/materialdesignicons.css'
 import axios from 'axios'
 import { GetErrorMsg, Prompt, ShowLogin } from './utils'
+import i18n from './utils/i18n'
 const list = sanitizeHtml.defaults.allowedTags.concat(sanitizeHtml.defaults.selfClosing);
 const attrs = sanitizeHtml.defaults.allowedAttributes;
 attrs['*'] = ['href', 'align', 'alt', 'center', 'bgcolor', 'data-*', 'class', 'style']
@@ -19,6 +20,7 @@ const sanitize = (dirty) => {
     allowedAttributes: attrs
   });
 }
+
 Vue.prototype.$sanitize = sanitize;
 Vue.prototype.$d = Date.parse;
 Vue.use(VueCookies);
@@ -46,6 +48,7 @@ axios.interceptors.response.use(response => {
 });
 
 new Vue({
+  i18n,
   router,
   store,
   vuetify,

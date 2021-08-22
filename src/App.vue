@@ -190,7 +190,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title>{{ $t(item.title) }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item v-if="showInstall" @click="install">
@@ -199,7 +199,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>Install</v-list-item-title>
+            <v-list-item-title>{{ $t('app.ins') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -217,7 +217,7 @@
                 class="pl-3 ma-0"
                 @change="changeTheme"
                 v-model="$vuetify.theme.dark"
-                label="dark mode"
+                :label="$vuetify.theme.dark? $t('app.dark'):$t('app.light')"
               ></v-switch>
             </v-list-item-title>
           </v-list-item-content>
@@ -228,7 +228,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>Settings</v-list-item-title>
+            <v-list-item-title>{{$t('app.set')}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -475,21 +475,21 @@ export default class App extends Vue {
   enable = false;
   notificationNum = 0;
   items = [
-    { title: "Home", icon: "mdi-home-city", href: "/", show: true },
+    { title: "app.home", icon: "mdi-home-city", href: "/", show: true },
     {
-      title: "My Home",
+      title: "app.myhome",
       icon: "mdi-account",
       href: "/account",
       show: true,
     },
     {
-      title: "New Article",
+      title: "app.newArticle",
       icon: "mdi-file-document-edit",
       href: "/edit",
       show: true,
     },
     {
-      title: "New Group",
+      title: "app.newGroup",
       icon: "mdi-account-group",
       click: () => {
         NewGroup();
@@ -497,12 +497,12 @@ export default class App extends Vue {
       show: true,
     },
     {
-      title: "Recycle Bin",
+      title: "app.recycle",
       icon: "mdi-delete",
       href: "/recycle",
       show: true,
     },
-    { title: "About", icon: "mdi-alpha-a-circle", href: "/about", show: true },
+    { title: "app.about", icon: "mdi-alpha-a-circle", href: "/about", show: true },
   ];
   get isUser() {
     return this.user.roles && this.user.roles.indexOf(UserRole) >= 0;
