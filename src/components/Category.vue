@@ -4,16 +4,16 @@
       :validator="validator"
       :inputProps="inputProps"
       :show.sync="addCate"
-      title="添加集合"
-      confirmText="确认"
+      :title="$t('components.addCate')"
+      :confirmText="$t('components.confirm')"
       :confirm="confirm"
     />
     <MO2Dialog
       :validator="validator"
       :inputProps="inputPropsEdit"
       :show.sync="editCate"
-      title="添加集合"
-      confirmText="确认"
+      :title="$t('components.addCate')"
+      :confirmText="$t('components.confirm')"
       :confirm="confirmEdit"
     />
     <v-row>
@@ -62,13 +62,13 @@
             max-width="344"
           >
             <v-card-text>
-              <div>mo2 category</div>
+              <div>mo2 {{ $t("components.categories") }}</div>
               <p class="display-1 text--primary">{{ c.name }}</p>
             </v-card-text>
             <v-card-actions>
               <v-chip class="ma-2" color="secondary" label text-color="white">
                 <v-icon left> mdi-label </v-icon>
-                Category
+                {{ $t("components.categories") }}
               </v-chip>
             </v-card-actions>
 
@@ -82,7 +82,9 @@
                 @click="nextCate(c)"
               >
                 <v-card-text class="pb-0">
-                  <p class="display-1 text--primary">Click to enter</p>
+                  <p class="display-1 text--primary">
+                    {{ $t("components.clickToEnter") }}
+                  </p>
                   <!-- <p class="display-1 text--primary">Contains:</p> -->
                   <p class="display-1 text--secondary">
                     {{ c.name }}
@@ -95,14 +97,14 @@
                     v-on:click.prevent
                     v-on:click.stop
                     color="accent"
-                    >Edit</v-btn
+                    >{{ $t("components.edit") }}</v-btn
                   >
                   <v-btn
                     color="error"
                     v-on:click.prevent
                     v-on:click.stop
                     @click="deleteCate(c)"
-                    >delete</v-btn
+                    >{{ $t("components.delete") }}</v-btn
                   >
                 </v-card-actions>
               </v-card>
@@ -113,7 +115,7 @@
     </v-row>
     <nothing
       v-else-if="blogs.length === 0"
-      :btnText="own ? 'Create New' : ''"
+      :btnText="own ? $t('components.create') : ''"
       @click="addCate = true"
     />
     <v-container>
@@ -167,7 +169,7 @@ export default class Mo2Category extends Vue {
       errorMsg: {
         required: "集合名不可为空",
       },
-      label: "Name",
+      label: this.$t("components.cateName") as string,
       default: "",
       icon: "mdi-folder",
       col: 12,
@@ -179,7 +181,7 @@ export default class Mo2Category extends Vue {
       errorMsg: {
         required: "集合名不可为空",
       },
-      label: "Name",
+      label: this.$t("components.cateName") as string,
       default: "",
       icon: "mdi-folder",
       col: 12,

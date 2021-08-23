@@ -32,7 +32,9 @@
           @click="confirmClick"
           >{{ confirmText }}</v-btn
         >
-        <v-btn @click="close" color="error">取消</v-btn>
+        <v-btn @click="close" color="error">{{
+          $t("components.cancel")
+        }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

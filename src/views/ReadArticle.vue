@@ -59,7 +59,7 @@
                       <v-icon>mdi-publish</v-icon>
                     </v-btn>
                   </template>
-                  <span>Publish</span>
+                  <span>{{ $t("article.publish") }}</span>
                 </v-tooltip>
                 <v-tooltip v-if="user.id === blog.authorId" bottom>
                   <template v-slot:activator="{ on, attrs }">
@@ -78,7 +78,7 @@
                       <v-icon>mdi-file-document-edit</v-icon>
                     </v-btn>
                   </template>
-                  <span>Edit</span>
+                  <span>{{ $t("article.edit") }}</span>
                 </v-tooltip>
                 <v-tooltip v-if="user.id === blog.authorId" bottom>
                   <template v-slot:activator="{ on, attrs }">
@@ -97,7 +97,7 @@
                       <v-icon>mdi-delete</v-icon>
                     </v-btn>
                   </template>
-                  <span>Delete</span>
+                  <span>{{ $t("article.delete") }}</span>
                 </v-tooltip>
                 <v-tooltip
                   v-if="blog.entityInfo.is_deleted && user.id === blog.authorId"
@@ -119,7 +119,7 @@
                       <v-icon>mdi-delete-restore</v-icon>
                     </v-btn>
                   </template>
-                  <span>Restore</span>
+                  <span>{{ $t("article.restore") }}</span>
                 </v-tooltip>
               </v-row>
             </v-container>
@@ -141,7 +141,7 @@
               spellcheck="false"
             ></div>
             <delete-confirm
-              :title="'确认删除'"
+              :title="$t('article.confirmDelete')"
               :content="deleteContent"
               :show.sync="showDelete"
               @confirm="confirmDelete"
@@ -189,7 +189,9 @@
                   </v-list-item-content>
 
                   <v-list-item-content>
-                    <v-list-item-title>Comments</v-list-item-title>
+                    <v-list-item-title>
+                      {{ $t("article.comment") }}</v-list-item-title
+                    >
                     <!-- <v-list-item-subtitle>Logged In</v-list-item-subtitle> -->
                   </v-list-item-content>
                   <v-list-item-content>
@@ -207,7 +209,7 @@
                   ><v-textarea
                     :loading="commentPosting"
                     auto-grow
-                    placeholder="Write what you think about"
+                    :placeholder="$t('article.writeComments')"
                     flat
                     reverse
                     rows="1"
@@ -235,6 +237,7 @@
                         c.authorProfile.name
                       }}</v-list-item-title>
                       <time-ago
+                        :locale="$i18n.locale === 'en' ? 'en' : 'zh_TW'"
                         :refresh="60"
                         :datetime="c.entity_info.updateTime"
                         tooltip
@@ -261,7 +264,7 @@
                       ><v-textarea
                         :loading="commentPosting"
                         auto-grow
-                        placeholder="Write what you think about"
+                        :placeholder="$t('article.writeComments')"
                         flat
                         reverse
                         rows="1"
@@ -293,6 +296,7 @@
                               s.authorProfile.name
                             }}</v-list-item-title>
                             <time-ago
+                              :locale="$i18n.locale === 'en' ? 'en' : 'zh_TW'"
                               :refresh="60"
                               :datetime="s.entity_info.updateTime"
                               tooltip
@@ -327,14 +331,14 @@
               >
               <v-list v-if="nomore && commentNum === 0">
                 <v-list-item>
-                  <h1 class="ml-7">暂时没有评论</h1>
+                  <h1 class="ml-7">{{ $t("article.noComments") }}</h1>
                 </v-list-item>
               </v-list>
             </v-navigation-drawer>
             <MO2Dialog
               :show.sync="showPublish"
-              confirmText="发布"
-              title="发布文章"
+              :confirmText="$t('article.publish')"
+              :title="$t('article.publishArticle')"
               :inputProps="inputProps"
               :validator="validator"
               ref="dialog"

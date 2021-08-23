@@ -26,8 +26,8 @@
     <MO2Dialog
       v-if="propLoad"
       :show.sync="showPublish"
-      confirmText="发布"
-      title="发布文章"
+      :confirmText="$t('article.publish')"
+      :title="$t('article.publishArticle')"
       :inputProps="inputProps"
       :validator="validator"
       ref="dialog"
@@ -37,8 +37,8 @@
     <MO2Dialog
       v-if="propLoad"
       :show.sync="uploadMD"
-      confirmText="发布"
-      title="发布文章"
+      :confirmText="$t('article.publish')"
+      :title="$t('article.publishArticle')"
       :inputProps="uploadProps"
       :validator="uploadValidator"
       :confirm="confirmMD"

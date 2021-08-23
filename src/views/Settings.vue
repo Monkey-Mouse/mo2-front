@@ -4,15 +4,14 @@
       <v-col cols="12" lg="8" offset-lg="2">
         <v-row>
           <v-col>
-            <h1>Settings</h1>
+            <h1>{{ $t("setting.settings") }}</h1>
           </v-col>
         </v-row>
         <v-row>
           <v-col>
             <v-alert type="info" elevation="2" outlined
-              >这里所有设置都会实时应用{{
-                isUser ? "，且会在不同机器之间自动同步" : ""
-              }}</v-alert
+              >{{ $t("setting.realTimeSync")
+              }}{{ isUser ? $t("setting.realTimeSync") : "" }}</v-alert
             >
           </v-col>
         </v-row>
@@ -25,7 +24,7 @@
               elevation="2"
               outlined
               class="clickable"
-              >只有登录之后设置才会在不同机器之间同步</v-alert
+              >{{ $t("setting.onlyLoginSync") }}</v-alert
             >
           </v-col>
         </v-row>
@@ -44,7 +43,7 @@
             <v-expansion-panel-header>
               <v-row>
                 <v-col>
-                  <h2>Light Theme</h2>
+                  <h2>{{ $t("setting.light") }}</h2>
                 </v-col>
               </v-row>
             </v-expansion-panel-header>
@@ -64,7 +63,7 @@
             <v-expansion-panel-header>
               <v-row>
                 <v-col>
-                  <h2>Dark Theme</h2>
+                  <h2>{{ $t("setting.dark") }}</h2>
                 </v-col>
               </v-row>
             </v-expansion-panel-header>
@@ -104,7 +103,7 @@ export default class Settings extends Vue {
   validator = {};
   inputProps: { [name: string]: InputProp } = {
     darkMode: {
-      label: "prefer dark",
+      label: this.$t("setting.preferDark") as string,
       default: GetTheme(),
       icon: "mdi-theme-light-dark",
       col: 6,

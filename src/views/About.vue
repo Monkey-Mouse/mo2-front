@@ -23,7 +23,8 @@
         <v-list-item>
           <v-list-item-content>
             <v-list-item-title class="text-h3"
-              ><v-icon size="64">mdi-creation</v-icon>美丽</v-list-item-title
+              ><v-icon size="64">mdi-creation</v-icon
+              >{{ $t("about.beautiful") }}</v-list-item-title
             >
           </v-list-item-content>
         </v-list-item>
@@ -31,14 +32,15 @@
           <v-list-item-content>
             <v-list-item-title class="text-h3">
               <v-icon size="64" @click="gotoGithub">mdi-github</v-icon
-              >开源</v-list-item-title
+              >{{ $t("about.openSource") }}</v-list-item-title
             >
           </v-list-item-content>
         </v-list-item>
         <v-list-item>
           <v-list-item-content>
             <v-list-item-title class="text-h3"
-              ><v-icon size="64">mdi-bike-fast</v-icon>低延迟</v-list-item-title
+              ><v-icon size="64">mdi-bike-fast</v-icon
+              >{{ $t("about.lowDelay") }}</v-list-item-title
             >
           </v-list-item-content>
         </v-list-item>
@@ -46,7 +48,7 @@
           <v-list-item-content>
             <v-list-item-title class="text-h3"
               ><v-icon size="64">mdi-alphabetical-variant-off</v-icon
-              >无广告</v-list-item-title
+              >{{ $t("about.noadv") }}</v-list-item-title
             >
           </v-list-item-content>
         </v-list-item>

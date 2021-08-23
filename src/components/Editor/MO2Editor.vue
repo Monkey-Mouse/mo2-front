@@ -432,12 +432,12 @@ export default class MO2Editor extends Vue {
           this.initEditor(c, d.token, true);
           this.$router.replace(this.$route.fullPath + "?group=" + d.token);
           navigator.clipboard.writeText(window.location.href).then(() => {
-            Prompt("合作编辑加入链接已复制到剪贴板！分享给别人即可", 10000);
+            Prompt(this.$t("components.copyedLink") as string, 10000);
           });
         })
         .catch(() => {
           this.$router.replace(this.$route.path);
-          Prompt("初始化合作编辑失败！", 10000);
+          Prompt(this.$t("components.coeditErr") as string, 10000);
         });
     } else {
       // eslint-disable-next-line @typescript-eslint/camelcase
@@ -449,7 +449,7 @@ export default class MO2Editor extends Vue {
         this.$router.replace(this.$route.path).then(() => {
           this.initEditor(c);
         });
-        Prompt("退出合作编辑！", 10000);
+        Prompt(this.$t("components.quitCoEdit") as string, 10000);
       });
     }
   }

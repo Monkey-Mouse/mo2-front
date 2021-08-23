@@ -4,10 +4,10 @@
       <v-col class="text-center">
         <v-icon size="200">mdi-circle-off-outline</v-icon>
       </v-col>
-      <v-col class="text-center text-h1"> 404 Page Not Found! </v-col>
+      <v-col class="text-center text-h1"> {{ $t("notFound.notFound") }} </v-col>
     </v-row>
     <v-row justify="center">
-      <a @click="$router.push('/')">Back to home</a>
+      <a @click="$router.push('/')">{{ $t("notFound.back") }}</a>
     </v-row>
   </v-container>
 </template>

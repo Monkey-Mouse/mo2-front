@@ -4,10 +4,10 @@
       <v-row align="center" justify="center">
         <v-col class="text-center" cols="12">
           <h1 class="display-1 font-weight-thin mb-4 pink--text">
-            Recycle Bin
+            {{ $t("recycle.recycleBin") }}
           </h1>
           <h4 class="subheading pink--text">
-            Even trashes may contains sth. valuable
+            {{ $t("recycle.recycleMsg") }}
           </h4>
         </v-col>
       </v-row>

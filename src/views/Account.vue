@@ -12,14 +12,14 @@
       :validator="validator"
       :inputProps="inputProps"
       :show.sync="edit"
-      title="更改信息"
-      confirmText="确认"
+      :title="$t('account.changeMsg')"
+      :confirmText="$t('account.confirm')"
       :confirm="confirm"
     />
     <cropper
       :show.sync="showCropper"
       :img="avatar"
-      title="裁剪你的头像"
+      :title="$t('account.cropMsg')"
       @confirm="confirmAvatar"
       :loading="avatarProcessing"
       :confirmerr="avErr"
@@ -103,7 +103,11 @@
     <v-container>
       <v-container v-if="projects.length > 0" class="pa-10">
         <v-row>
-          <v-col><div class="text-h2 text-center">Groups</div></v-col>
+          <v-col
+            ><div class="text-h2 text-center">
+              {{ $t("account.groups") }}
+            </div></v-col
+          >
         </v-row>
         <v-row>
           <v-divider />
@@ -123,10 +127,12 @@
       >
         <v-tabs-slider></v-tabs-slider>
 
-        <v-tab href="#tab-1"> Articles </v-tab>
+        <v-tab href="#tab-1"> {{ $t("account.article") }} </v-tab>
 
-        <v-tab v-if="ownPage" href="#tab-2"> DraftBox </v-tab>
-        <v-tab href="#tab-3"> Categories </v-tab>
+        <v-tab v-if="ownPage" href="#tab-2">
+          {{ $t("account.draftbox") }}
+        </v-tab>
+        <v-tab href="#tab-3"> {{ $t("account.categories") }}</v-tab>
       </v-tabs>
 
       <v-tabs-items v-model="tab">

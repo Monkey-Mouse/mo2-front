@@ -47,6 +47,7 @@
                     <v-skeleton-loader v-else type="card-heading" />
                     <div class="subtitle-2">
                       <time-ago
+                        :locale="$i18n.locale === 'en-US' ? 'en' : 'zh_TW'"
                         :refresh="60"
                         :datetime="
                           blog.entityInfo
@@ -101,7 +102,7 @@
             </v-row>
             <v-divider dark></v-divider>
             <v-card-actions class="pa-4">
-              Rate
+              {{ $t("components.rate") }}
               <v-spacer></v-spacer>
               <span class="text--lighten-2 caption mr-2">
                 ({{ blog.score_sum / blog.score_num }}) by
@@ -155,7 +156,8 @@
       <v-row justify="center">
         <v-col class="text-center"
           ><h1 class="text-h1">
-            Nothing here yet :<span v-if="showI">(</span><span v-else>)</span>
+            {{ $t("components.nothing") }}<span v-if="showI">(</span
+            ><span v-else>)</span>
           </h1>
         </v-col>
       </v-row>
@@ -167,7 +169,7 @@
       <v-row justify="center">
         <v-col class="text-center"
           ><v-btn outlined to="/edit" color="primary">
-            Create your own article
+            {{ $t("components.createArticle") }}
           </v-btn>
         </v-col>
       </v-row>

@@ -47,7 +47,7 @@
     <v-row>
       <v-col cols="12" md="6">
         <v-row class="mb-2">
-          <v-col class="text-h4 text-center">Owner</v-col>
+          <v-col class="text-h4 text-center">{{$t('project.owner')}}</v-col>
         </v-row>
         <v-row class="mb-3">
           <user-item :user="owner"/>
@@ -56,7 +56,7 @@
       <v-col cols="12" md="6">
         <v-container >
           <v-row>
-            <v-col class="text-h4 text-center">Managers</v-col>
+            <v-col class="text-h4 text-center">{{$t('project.managers')}}</v-col>
           </v-row>
           <v-row v-if="managers.length>0" class="mb-3">
             <v-col v-for="(v,i) in managers" :key="i">
@@ -65,7 +65,7 @@
           </v-row>
           <v-row v-else class="mb-3">
             <v-col class="text-center">
-              No Manager Yet
+              {{$t('project.nomanagers')}}
             </v-col>
           </v-row>
         </v-container>
@@ -73,7 +73,7 @@
     </v-row>
     <v-container >
       <v-row>
-        <v-col class="text-h4 text-center">Members
+        <v-col class="text-h4 text-center">{{$t('project.members')}}
         </v-col>
       </v-row>
       <v-row v-if="members.length>0" class="mb-3">
@@ -83,7 +83,7 @@
       </v-row>
       <v-row v-else class="mb-3">
         <v-col class="text-center">
-          No Member Yet
+          {{$t('project.nomembers')}}
         </v-col>
       </v-row>
     </v-container>

@@ -30,7 +30,7 @@
             @blur="search = false"
             class="pa-1"
             style="max-width: 300px"
-            label="Search"
+            :label="$t('app.search')"
             clearable
             :search-input.sync="searchString"
             hide-details="auto"
@@ -81,7 +81,7 @@
         style="margin-right: 10px"
         @click="showLogin()"
       >
-        LOGIN
+        {{ $t("app.login") }}
       </v-btn>
       <div
         v-if="
@@ -99,16 +99,16 @@
           </div>
 
           <div v-else-if="autoSaving === null" class="error--text ma-2">
-            Failed!
+            {{ $t("app.failed") }}
           </div>
-          <div v-else class="success--text ma-2">Saved!</div>
+          <div v-else class="success--text ma-2">{{ $t("app.saved") }}</div>
           <v-btn
             class="ml-1 mt-1"
             color="success"
             small
             outlined
             @click="publishClick"
-            >publish</v-btn
+            >{{ $t("app.publish") }}</v-btn
           >
         </v-row>
       </div>
@@ -158,7 +158,7 @@
         </v-badge>
 
         <v-list-item-title class="ml-7">{{
-          isUser ? user.name : "未登录"
+          isUser ? user.name : $t("app.nologin")
         }}</v-list-item-title>
 
         <v-btn
@@ -171,8 +171,12 @@
         >
           <v-icon>mdi-email</v-icon>
         </v-btn>
-        <v-btn icon v-if="!isUser" @click="showLogin()"> 登录 </v-btn>
-        <v-btn icon v-else color="error" @click="logOut"> 登出 </v-btn>
+        <v-btn icon v-if="!isUser" @click="showLogin()">
+          {{ $t("app.login") }}
+        </v-btn>
+        <v-btn icon v-else color="error" @click="logOut">
+          {{ $t("app.logout") }}
+        </v-btn>
       </v-list-item>
 
       <v-divider></v-divider>
@@ -199,7 +203,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{ $t('app.ins') }}</v-list-item-title>
+            <v-list-item-title>{{ $t("app.ins") }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -217,7 +221,7 @@
                 class="pl-3 ma-0"
                 @change="changeTheme"
                 v-model="$vuetify.theme.dark"
-                :label="$vuetify.theme.dark? $t('app.dark'):$t('app.light')"
+                :label="$vuetify.theme.dark ? $t('app.dark') : $t('app.light')"
               ></v-switch>
             </v-list-item-title>
           </v-list-item-content>
@@ -228,7 +232,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{$t('app.set')}}</v-list-item-title>
+            <v-list-item-title>{{ $t("app.set") }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -236,8 +240,8 @@
     <v-main>
       <MO2Dialog
         :confirm="newGroup"
-        :confirmText="'Create'"
-        :title="'New Group'"
+        :confirmText="$t('app.create')"
+        :title="$t('app.newGroup')"
         :inputProps="groupProps"
         :validator="groupValidator"
         :show.sync="showGroup"
@@ -250,11 +254,11 @@
       />
       <account-modal :enable.sync="enable" :user.sync="userdata" />
       <v-snackbar v-model="snackbar" :timeout="5000">
-        {{ "登出成功！" }}
+        {{ $t("app.loggedOut") }}
 
         <template v-slot:action="{ attrs }">
           <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
-            Close
+            {{ $t("app.close") }}
           </v-btn>
         </template>
       </v-snackbar>
@@ -265,14 +269,14 @@
       >
       <v-btn @click="sideNavVisible = !sideNavVisible">show side bar</v-btn> -->
       <v-snackbar v-model="refresh" timeout="-1">
-        发现新版本，请刷新
+        {{ $t("app.reflashMsg") }}
 
         <template v-slot:action="{ attrs }">
           <v-btn color="accent" text v-bind="attrs" @click="reload">
-            Refresh
+            {{ $t("app.reflash") }}
           </v-btn>
           <v-btn color="pink" text v-bind="attrs" @click="refresh = false">
-            Close
+            {{ $t("app.close") }}
           </v-btn>
         </template>
       </v-snackbar>
@@ -281,7 +285,7 @@
 
         <template v-slot:action="{ attrs }">
           <v-btn color="pink" text v-bind="attrs" @click="prompt = false">
-            Close
+            {{ $t("app.close") }}
           </v-btn>
         </template>
       </v-snackbar>
@@ -374,9 +378,9 @@ export default class App extends Vue {
   groupProps: { [name: string]: InputProp } = {
     name: {
       errorMsg: {
-        required: "组名不可为空",
+        required: this.$t("app.nameRequired") as string,
       },
-      label: "Name",
+      label: this.$t("app.name") as string,
       default: "",
       icon: "mdi-rename-box",
       col: 12,
@@ -384,9 +388,9 @@ export default class App extends Vue {
     },
     description: {
       errorMsg: {
-        required: "组描述不可为空",
+        required: this.$t("app.descriptionRequired") as string,
       },
-      label: "Description",
+      label: this.$t("app.description") as string,
       default: "",
       icon: "mdi-text",
       col: 12,
@@ -394,15 +398,20 @@ export default class App extends Vue {
     },
     tags: {
       errorMsg: {
-        required: "标签不可为空",
+        required: this.$t("app.tagRequired") as string,
       },
-      label: "Description",
+      label: this.$t("app.tag") as string,
       default: [],
       icon: "mdi-text",
       col: 12,
       type: "combo",
-      options: ["课程", "娱乐", "互联网", "教育"],
-      message: "enter添加自定义tag",
+      options: [
+        this.$t("app.course") as string,
+        this.$t("app.entertainment") as string,
+        this.$t("app.internet") as string,
+        this.$t("app.education") as string,
+      ],
+      message: this.$t("app.addTag") as string,
       multiple: true,
     },
   };
@@ -502,7 +511,12 @@ export default class App extends Vue {
       href: "/recycle",
       show: true,
     },
-    { title: "app.about", icon: "mdi-alpha-a-circle", href: "/about", show: true },
+    {
+      title: "app.about",
+      icon: "mdi-alpha-a-circle",
+      href: "/about",
+      show: true,
+    },
   ];
   get isUser() {
     return this.user.roles && this.user.roles.indexOf(UserRole) >= 0;

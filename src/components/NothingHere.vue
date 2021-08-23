@@ -8,7 +8,8 @@
     <v-row justify="center">
       <v-col class="text-center"
         ><h1 class="text-h1">
-          Nothing here yet :<span v-if="showI">(</span><span v-else>)</span>
+          {{ $t("components.nothing") }}<span v-if="showI">(</span
+          ><span v-else>)</span>
         </h1>
       </v-col>
     </v-row>

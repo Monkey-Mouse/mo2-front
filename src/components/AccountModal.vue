@@ -30,9 +30,9 @@
             <v-col cols="12">
               <v-card-title>
                 <v-tabs align-with-title v-model="tabkey">
-                  <v-tab :key="1">登录</v-tab>
-                  <v-tab :key="2">注册</v-tab>
-                  <v-tab :key="3">OAuth</v-tab>
+                  <v-tab :key="1">{{ $t("components.login") }}</v-tab>
+                  <v-tab :key="2">{{ $t("components.register") }}</v-tab>
+                  <v-tab :key="3">{{ $t("components.oauth") }}</v-tab>
                 </v-tabs>
               </v-card-title>
             </v-col>
@@ -43,7 +43,7 @@
                 <v-row>
                   <v-col cols="12">
                     <v-text-field
-                      label="Email or UserName"
+                      :label="$t('components.emailOrName')"
                       v-model="emailOrName"
                       :rules="validateNameOrEmail()"
                     >
@@ -54,7 +54,7 @@
                 <v-row>
                   <v-col cols="12">
                     <v-text-field
-                      label="Password"
+                      :label="$t('components.password')"
                       v-model="password"
                       :type="showPasswd ? 'text' : 'password'"
                       :append-icon="showPasswd ? 'mdi-eye-off' : 'mdi-eye'"
@@ -81,9 +81,11 @@
                     this.$v.password.$anyError || this.$v.emailOrName.$anyError
                   "
                   @click="login"
-                  >登录</v-btn
+                  >{{ $t("components.login") }}</v-btn
                 >
-                <v-btn @click="close" color="error">取消</v-btn>
+                <v-btn @click="close" color="error">{{
+                  $t("components.cancel")
+                }}</v-btn>
               </v-card-actions>
             </v-tab-item>
             <v-tab-item :key="2">
@@ -91,7 +93,7 @@
                 <v-row>
                   <v-col cols="12">
                     <v-text-field
-                      label="Name"
+                      :label="$t('components.name')"
                       v-model="name"
                       :rules="validateName()"
                     >
@@ -102,7 +104,7 @@
                 <v-row>
                   <v-col cols="12">
                     <v-text-field
-                      label="Email"
+                      :label="$t('components.email')"
                       v-model="email"
                       :rules="validateEmail()"
                     >
@@ -113,7 +115,7 @@
                 <v-row>
                   <v-col cols="12">
                     <v-text-field
-                      label="Password"
+                      :label="$t('components.password')"
                       v-model="password"
                       :type="showPasswd ? 'text' : 'password'"
                       :append-icon="showPasswd ? 'mdi-eye-off' : 'mdi-eye'"
@@ -151,18 +153,22 @@
                 > -->
                 <v-btn :disabled="regDisable" outlined text @click="register">{{
                   emailSent
-                    ? "重新发送" + (seconds > 0 ? `${seconds}` : "")
-                    : "注册"
+                    ? $t("components.resend") +
+                      (seconds > 0 ? `${seconds}` : "")
+                    : $t("components.register")
                 }}</v-btn>
 
-                <v-btn @click="close" color="error">取消</v-btn>
+                <v-btn @click="close" color="error">{{
+                  $t("components.cancel")
+                }}</v-btn>
               </v-card-actions>
             </v-tab-item>
             <v-tab-item :key="3" style="min-height: 150px">
               <v-row justify="center">
                 <v-col cols="12" align-self="center" class="text-center"
                   ><v-btn @click="github"
-                    ><v-icon>mdi-github</v-icon>使用GitHub账号</v-btn
+                    ><v-icon>mdi-github</v-icon
+                    >{{ $t("components.useGitHub") }}</v-btn
                   ></v-col
                 >
               </v-row>
@@ -233,13 +239,13 @@ export default class AccountModal extends Vue {
       this.seconds > 0
     );
   }
-  @Watch('enable')
-  enableChange(){
-    if (this.user.email.indexOf('@mo2')>-1) {
-      return
+  @Watch("enable")
+  enableChange() {
+    if (this.user.email.indexOf("@mo2") > -1) {
+      return;
     }
     this.emailOrName = this.user.email;
-    this.email = this.user.email
+    this.email = this.user.email;
   }
 
   created() {
