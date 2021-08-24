@@ -10,6 +10,8 @@ export default {
         set: 'Settings',
         dark: 'dark mode',
         light: 'light mode',
+        chinese: 'Chinese',
+        english: 'English',
         login: 'LOGIN',
         logout: 'LOGOUT',
         nologin: 'Not Login',
@@ -32,7 +34,7 @@ export default {
         addTag: 'enter to add customized tags',
         publish: 'Publish',
         failed: 'Failed!',
-        saved:'Saved!',
+        saved: 'Saved!',
     },
     account: {
         confirm: 'Confirm',

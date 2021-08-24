@@ -10,6 +10,8 @@ export default {
         set: '设置',
         dark: '深色模式',
         light: '浅色模式',
+        chinese: '中文',
+        english:'英文',
         login: '登录',
         logout: '登出',
         nologin: '未登录',

@@ -208,6 +208,26 @@
         </v-list-item>
       </v-list>
       <template v-slot:append>
+        <!-- 语言 -->
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon>mdi-format-font</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>
+              <v-switch
+                dense
+                :hide-details="true"
+                class="pl-3 ma-0"
+                @change="changeLocale"
+                v-model="isChinese"
+                :label="isChinese ? $t('app.chinese') : $t('app.english')"
+              ></v-switch>
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
         <v-list-item>
           <v-list-item-icon>
             <v-icon>mdi-theme-light-dark</v-icon>
@@ -675,6 +695,20 @@ export default class App extends Vue {
       this.$vuetify.theme.themes,
       this.user
     );
+  }
+  /* 切换语言 */
+  changeLocale() {
+    if (this.$i18n.locale === "zh-CN") {
+      this.$i18n.locale = "en-US";
+    } else {
+      this.$i18n.locale = "zh-CN";
+    }
+  }
+  get isChinese() {
+    return this.$i18n.locale === "zh-CN";
+  }
+  set isChinese(v: boolean) {
+    console.log(v)
   }
 }
 </script>
