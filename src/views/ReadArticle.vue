@@ -589,7 +589,7 @@ export default class ReadArticle extends Vue {
   }
   @Watch("$route")
   articleChange() {
-    if (this.$route.params["id"] !== this.blog.id) {
+    if (this.$route.path.startsWith('article/')&& this.$route.params["id"] !== this.blog.id) {
       this.init();
     }
   }

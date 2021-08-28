@@ -66,6 +66,7 @@ export default {
         nomanagers: '还没有管理员',
         members: '成员',
         nomembers: '还没有成员呢',
+        loadmore: '加载更多',
     },
     setting: {
         settings: '设置',

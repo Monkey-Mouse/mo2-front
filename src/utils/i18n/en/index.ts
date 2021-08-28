@@ -64,8 +64,9 @@ export default {
         owner: 'Owner',
         managers: 'Managers',
         nomanagers: 'Not Manager Yet',
-        members: 'Menbers',
+        members: 'Members',
         nomembers: 'Not Member Yet',
+        loadmore: 'Load More',
     },
     setting: {
         settings: 'Settings',
