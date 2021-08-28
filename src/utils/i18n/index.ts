@@ -7,8 +7,12 @@ const messages = {
     'zh-CN': cn,
     'en-US': en
 }
+let code = localStorage.getItem('lang')
+if (!code) {
+    code = navigator.language
+}
 const i18n = new VueI18n({
-    locale: 'zh-CN',
+    locale: code,
     messages
 })
 export default i18n

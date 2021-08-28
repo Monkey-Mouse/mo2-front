@@ -703,6 +703,7 @@ export default class App extends Vue {
     } else {
       this.$i18n.locale = "zh-CN";
     }
+    localStorage.setItem('lang',this.$i18n.locale)
   }
   get isChinese() {
     return this.$i18n.locale === "zh-CN";
