@@ -164,12 +164,18 @@ export default class EditArticle extends Vue {
   };
 
   created() {
-    this.init();
-    const p1 = GetCates(this.user.id).then((data) => {
-      this.inputProps.categories.options = data.map((v, i, a) => {
-        return { text: v.name, value: v.id };
+    let p1 = null;
+    if (document.location.host.includes("kshub")) {
+      delete this.inputProps.categories;
+      this.init();
+    } else {
+      this.init();
+      p1 = GetCates(this.user.id).then((data) => {
+        this.inputProps.categories.options = data.map((v, i, a) => {
+          return { text: v.name, value: v.id };
+        });
       });
-    });
+    }
     const p2 = ListProject({ Page: 0, PageSize: 100, Uid: this.user.id }).then(
       (data) => {
         this.inputProps.project_id.options = data.map((v, i, a) => {

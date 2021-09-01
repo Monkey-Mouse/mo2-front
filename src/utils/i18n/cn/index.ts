@@ -11,7 +11,7 @@ export default {
         dark: '深色模式',
         light: '浅色模式',
         chinese: '中文',
-        english:'英文',
+        english: '英文',
         login: '登录',
         logout: '登出',
         nologin: '未登录',
@@ -35,6 +35,10 @@ export default {
         publish: '发布',
         failed: '失败！',
         saved: '已保存！',
+    },
+    home: {
+        mo2: 'MO2',
+        description: 'Blog site build for everyone, built by everyone'
     },
     account: {
         confirm: '确认',
@@ -67,6 +71,8 @@ export default {
         members: '成员',
         nomembers: '还没有成员呢',
         loadmore: '加载更多',
+        courseManagers: '管理员',
+        courseMembers: '成员'
     },
     setting: {
         settings: '设置',

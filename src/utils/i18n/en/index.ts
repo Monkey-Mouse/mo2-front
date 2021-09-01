@@ -36,6 +36,10 @@ export default {
         failed: 'Failed!',
         saved: 'Saved!',
     },
+    home: {
+        mo2: 'MO2',
+        description: 'Blog site build for everyone, built by everyone'
+    },
     account: {
         confirm: 'Confirm',
         changeMsg: 'change your message',
@@ -67,6 +71,8 @@ export default {
         members: 'Members',
         nomembers: 'Not Member Yet',
         loadmore: 'Load More',
+        courseManagers: 'Managers',
+        courseMembers: 'Members'
     },
     setting: {
         settings: 'Settings',

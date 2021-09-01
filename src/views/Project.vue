@@ -181,8 +181,8 @@ export default class ProjectPage extends Vue implements AutoLoader<BlogBrief> {
   groupProps: { [name: string]: InputProp } = {};
   memberPromise: Promise<string[]>;
   memberPage = 1;
-  get dispMembers(){
-    return this.members.slice(0,6*this.memberPage)
+  get dispMembers() {
+    return this.members.slice(0, 6 * this.memberPage);
   }
   buildProps() {
     const that = this;
@@ -235,7 +235,7 @@ export default class ProjectPage extends Vue implements AutoLoader<BlogBrief> {
       },
       ManagerIDs: {
         errorMsg: {},
-        label: "Managers",
+        label: this.$t("project.courseManagers") as string,
         default: [],
         icon: "mdi-account-supervisor",
         col: 12,
@@ -251,7 +251,7 @@ export default class ProjectPage extends Vue implements AutoLoader<BlogBrief> {
       },
       MemberIDs: {
         errorMsg: {},
-        label: "Members",
+        label: this.$t("project.courseMembers") as string,
         default: [],
         icon: "mdi-account-group",
         col: 12,
@@ -267,7 +267,7 @@ export default class ProjectPage extends Vue implements AutoLoader<BlogBrief> {
       },
     };
   }
-  loadMoreMember(){
+  loadMoreMember() {
     this.memberPage++;
   }
   get dialog() {
@@ -362,7 +362,7 @@ export default class ProjectPage extends Vue implements AutoLoader<BlogBrief> {
   memberChange() {
     const re = this.proj;
     GetUserDatas(re.MemberIDs).then((members) => {
-      this.members = members
+      this.members = members;
       for (let index = 0; index < members.length; index++) {
         const u = members[index];
         dic[u.id] = { text: u.name, value: u.id, avatar: u.settings?.avatar };
@@ -378,7 +378,7 @@ export default class ProjectPage extends Vue implements AutoLoader<BlogBrief> {
     this.buildProps();
     GetProject(this.$route.params["id"]).then((re) => {
       this.proj = re;
-      this.proj.MemberIDs = this.proj.MemberIDs
+      this.proj.MemberIDs = this.proj.MemberIDs;
       this.groupProps.name.default = this.proj.Name;
       this.groupProps.description.default = this.proj.Description;
       this.groupProps.tags.default = this.proj.Tags;
