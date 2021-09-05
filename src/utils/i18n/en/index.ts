@@ -59,6 +59,7 @@ export default {
         delete: 'Delete',
         confirmDelete: 'Confirm Delete',
         restore: 'Restore',
+        group: 'Group'
     },
     recycle: {
         recycleBin: 'Recycle Bin',

@@ -113,54 +113,56 @@ export default class EditArticle extends Vue {
     },
   };
   uploadMD = false;
-  inputProps: { [name: string]: InputProp } = {
-    title: {
-      errorMsg: {
-        required: "标题不可为空",
+  get inputProps(): { [name: string]: InputProp } {
+    return {
+      title: {
+        errorMsg: {
+          required: "标题不可为空",
+        },
+        label: "Title",
+        default: "",
+        icon: "mdi-format-title",
+        col: 12,
+        type: "text",
       },
-      label: "Title",
-      default: "",
-      icon: "mdi-format-title",
-      col: 12,
-      type: "text",
-    },
-    description: {
-      errorMsg: {
-        required: "描述不可为空",
-        min: "描述长度不小于8",
+      description: {
+        errorMsg: {
+          required: "描述不可为空",
+          min: "描述长度不小于8",
+        },
+        label: "Description",
+        default: "",
+        icon: "mdi-text",
+        col: 12,
+        type: "textarea",
       },
-      label: "Description",
-      default: "",
-      icon: "mdi-text",
-      col: 12,
-      type: "textarea",
-    },
-    cover: {
-      errorMsg: {},
-      label: "Cover",
-      default: {},
-      icon: "mdi-image",
-      col: 12,
-      type: "imgselector",
-    },
-    categories: {
-      errorMsg: {},
-      label: "Categories",
-      default: [],
-      col: 12,
-      options: [],
-      type: "select",
-      multiple: true,
-    },
-    project_id: {
-      errorMsg: {},
-      label: "Group",
-      default: "",
-      col: 12,
-      options: [],
-      type: "select",
-      multiple: false,
-    },
+      cover: {
+        errorMsg: {},
+        label: "Cover",
+        default: {},
+        icon: "mdi-image",
+        col: 12,
+        type: "imgselector",
+      },
+      categories: {
+        errorMsg: {},
+        label: "Categories",
+        default: [],
+        col: 12,
+        options: [],
+        type: "select",
+        multiple: true,
+      },
+      project_id: {
+        errorMsg: {},
+        label: this.$t("article.group").toString(),
+        default: "",
+        col: 12,
+        options: [],
+        type: "select",
+        multiple: false,
+      },
+    }
   };
 
   created() {

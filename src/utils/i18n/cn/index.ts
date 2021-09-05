@@ -59,6 +59,7 @@ export default {
         delete: '删除',
         confirmDelete: '确认删除',
         restore: '恢复',
+        group: '组'
     },
     recycle: {
         recycleBin: '回收站',
