@@ -6,18 +6,6 @@ trigger:
     - pull_request
     - push
 steps:
-  - name: start comment
-    image: jmccann/drone-github-comment:1
-    settings:
-      message: <h2><a target="_blank" href="${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}/${DRONE_REPO}/${DRONE_BUILD_NUMBER}/">CI Is Running⌛⌛⌛</a></h2>  <b>click the link above for details </b>
-      update: true
-      api-key: 
-        from_secret: api_key
-
-    when:
-      ref:
-        include:
-        - refs/pull/**
   - name: build 
     image: node:14
     commands:
@@ -28,36 +16,6 @@ steps:
       ref:
         include:
         - refs/pull/**
-  - name: comment
-    image: jmccann/drone-github-comment:1
-    settings:
-      message: <h2><a href="${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}/${DRONE_REPO}/${DRONE_BUILD_NUMBER}">CI Success✔️✔️✔️</a></h2><b>click the link above for details</b>
-      update: true
-      api-key: 
-        from_secret: api_key
-
-    depends_on:
-      - "build"
-    when:
-      ref:
-        include:
-        - refs/pull/**
-  - name: failed comment
-    image: jmccann/drone-github-comment:1
-    settings:
-      message: <h2><a href="${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}/${DRONE_REPO}/${DRONE_BUILD_NUMBER}">CI Failed❌❌❌</a></h2><b>click the link above for details</b>
-      update: true
-      api-key: 
-        from_secret: api_key
-
-    depends_on:
-      - "build"
-    when:
-      ref:
-        include:
-        - refs/pull/**
-      status:
-      - failure
   - name: ci build 
     image: node:14
     environment:
