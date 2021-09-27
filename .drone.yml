@@ -1,7 +1,7 @@
 kind: template
 load: motwo-vue-ac-pop.yml
 data:
-  deploy_file: deploy/*
+  deploy_file: deploy/mo2front.yaml
   docker_repo: registry.cn-hangzhou.aliyuncs.com/mo2/mo2-front
   docker_registry: registry.cn-hangzhou.aliyuncs.com
   default_branch: master
