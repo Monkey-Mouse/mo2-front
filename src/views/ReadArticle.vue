@@ -129,6 +129,11 @@
                 type="list-item-avatar"
               ></v-skeleton-loader>
             </v-row>
+            <v-row v-if="proj" class=" mt-9">
+              <v-col sm="6" cols="12">
+                <project-item :project="proj" :size="60" :flat="true"/>
+              </v-col>
+            </v-row>
             <!-- <img
           class="ma-5"
           src="https://th.bing.com/th/id/OIP.dnWfZl6P-0Pl47j7PhZodQHaHJ?w=187&h=180&c=7&o=5&dpr=2&pid=1.7"
@@ -364,6 +369,7 @@ import {
   GetCommentNum,
   GetComments,
   GetErrorMsg,
+  GetProject,
   GetUserData,
   GetUserDatas,
   globaldic,
@@ -392,6 +398,7 @@ import {
   BlankBlog,
   InputProp,
   BlogUpsert,
+  Project,
 } from "@/models";
 import Avatar from "@/components/UserAvatar.vue";
 import { Prop, Watch } from "vue-property-decorator";
@@ -399,6 +406,7 @@ import { TimeAgo } from "vue2-timeago";
 import DeleteConfirm from "@/components/DeleteConfirm.vue";
 import { required, minLength } from "vuelidate/lib/validators";
 import MO2Dialog from "../components/MO2Dialog.vue";
+import ProjectItem from "../components/ProjectItem.vue";
 @Component({
   components: {
     Editor,
@@ -406,6 +414,7 @@ import MO2Dialog from "../components/MO2Dialog.vue";
     DeleteConfirm,
     TimeAgo,
     MO2Dialog,
+    ProjectItem
   },
 })
 export default class ReadArticle extends Vue {
@@ -475,6 +484,7 @@ export default class ReadArticle extends Vue {
   loading = true;
   blog: Blog = BlankBlog;
   author: User;
+  proj: Project = {};
   authorLoad = false;
   showDelete = false;
   draft = false;
@@ -616,6 +626,9 @@ export default class ReadArticle extends Vue {
           this.author = u;
           this.authorLoad = true;
         });
+        GetProject(val.project_id).then(p=>{
+          this.proj = p;
+        })
         GetCommentNum(this.blog.id).then((c) => {
           this.commentNum = c.count;
         });
