@@ -1,5 +1,6 @@
 export default {
     app: {
+        logo: '/logo.png',
         home: '主页',
         myhome: '我的主页',
         newArticle: '新建文章',
@@ -88,7 +89,8 @@ export default {
         beautiful: '美丽',
         openSource: '开源',
         lowDelay: '低延迟',
-        noadv: '无广告'
+        noadv: '无广告',
+        title: '全心为用户打造的博客'
     },
     notFound: {
         notFound: '404 页面不存在!',

@@ -14,7 +14,7 @@ module.exports = {
     manifestOptions: {
       name: "Mo2",
       short_name: "Mo2",
-      start_url: "https://www.motwo.cn",
+      start_url: "/",
       display: "standalone",
       description: "超好用又好看的博客软件。速度快，应用小。安装它只需要不到一秒钟的时间。",
       features: [

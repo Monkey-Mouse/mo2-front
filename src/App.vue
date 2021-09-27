@@ -7,7 +7,7 @@
           alt="Logo"
           class="shrink mr-2 clickable"
           contain
-          src="./assets/logo.png"
+          :src="$t('app.logo')"
           transition="scale-transition"
           width="100"
         />
@@ -208,7 +208,7 @@
       </v-list>
       <template v-slot:append>
         <!-- 语言 -->
-        <v-list-item>
+        <v-list-item v-if="!kshub">
           <v-list-item-icon>
             <v-icon>mdi-format-font</v-icon>
           </v-list-item-icon>
@@ -314,14 +314,16 @@
         <v-divider></v-divider>
 
         <v-card-text class="white--text">
-          {{ new Date().getFullYear() }} — <strong>MO2</strong>
+          {{ new Date().getFullYear() }} — <strong>{{$t('home.mo2')}}</strong>
         </v-card-text>
       </v-card>
       <a class="ml-16" target="blank" href="http://beian.miit.gov.cn/"
         >冀ICP备20007570号-2</a
       >
     </v-footer>
-    <pwa-install usecustom="true"></pwa-install>
+    <div v-if="!kshub">
+      <pwa-install usecustom="true"></pwa-install>
+    </div>
   </v-app>
 </template>
 
@@ -434,6 +436,11 @@ export default class App extends Vue {
       multiple: true,
     },
   };
+  
+  public get kshub() : boolean {
+    return document.location.host.includes('kshub')
+  }
+  
   notifyClick() {
     if (this.notificationNum !== 0) {
       this.$router.push("/notifications");
@@ -457,8 +464,10 @@ export default class App extends Vue {
     return document?.querySelector("pwa-install");
   }
   install() {
-    this.installComponent.manifestpath = "/manifest.json";
-    this.installComponent.openPrompt();
+    if (this.installComponent) {
+      this.installComponent.manifestpath = "/manifest.json";
+      this.installComponent.openPrompt(); 
+    }
   }
   Prompt(msg: string, timeout: number) {
     this.pmsg = msg;
@@ -534,7 +543,7 @@ export default class App extends Vue {
       title: "app.about",
       icon: "mdi-alpha-a-circle",
       href: "/about",
-      show: true,
+      show: !document.location.host.includes('kshub'),
     },
   ];
   get isUser() {
@@ -673,7 +682,9 @@ export default class App extends Vue {
     setTimeout(() => {
       if (!localStorage.getItem("install")) this.install();
       localStorage.setItem("install", "prompted");
-      this.showInstall = !this.installComponent.getInstalledStatus();
+      if (!this.installComponent) {
+        this.showInstall = false
+      } else this.showInstall = !this.installComponent?.getInstalledStatus();
     }, 2000);
   }
   showLogin(email: string = undefined) {

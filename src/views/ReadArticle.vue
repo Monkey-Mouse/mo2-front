@@ -129,7 +129,7 @@
                 type="list-item-avatar"
               ></v-skeleton-loader>
             </v-row>
-            <v-row v-if="proj" class=" mt-9">
+            <v-row v-if="proj.id" class=" mt-9">
               <v-col sm="6" cols="12">
                 <project-item :project="proj" :size="60" :flat="true"/>
               </v-col>

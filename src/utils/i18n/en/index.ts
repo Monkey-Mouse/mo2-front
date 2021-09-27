@@ -1,5 +1,6 @@
 export default {
     app: {
+        logo: '/logo.png',
         home: 'Home',
         myhome: 'My Home',
         newArticle: 'New Article',
@@ -88,7 +89,8 @@ export default {
         beautiful: 'beautiful',
         openSource: 'Open Source',
         lowDelay: 'Low Delay',
-        noadv: 'No Advertisement'
+        noadv: 'No Advertisement',
+        title: 'Built with love for users'
     },
     notFound: {
         notFound: '404 Page Not Found!',

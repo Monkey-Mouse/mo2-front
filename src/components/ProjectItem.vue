@@ -2,11 +2,9 @@
   <v-card
     :to="'/project/' + project.ID"
     class="mx-auto"
-    :width="this.$vuetify.breakpoint.smAndDown ? '70vw' : '50vw'"
+    :width="this.$vuetify.breakpoint.smAndDown ? '65vw' : '50vw'"
     outlined
-    light
     :flat="flat"
-    :style="'color:' + color + '!important'"
   >
     <v-list-item three-line>
       <v-list-item-avatar tile :size="size" color="grey">{{
@@ -51,7 +49,7 @@ export default class ProjectItem extends Vue {
 }
 </script>
 <style lang="scss" scoped>
-.theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
-  color: inherit !important;
-}
+// .theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+//   color: inherit !important;
+// }
 </style>

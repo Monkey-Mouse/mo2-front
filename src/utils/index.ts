@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 import Vue from '*.vue';
 import { User, ApiError, InputProp, Option } from '../models/index'
 import { AxiosError } from 'axios';
@@ -9,10 +10,10 @@ export * from './api'
 export * from './autoloader'
 export * from './lazy-executor'
 export function ElementInViewport(el: HTMLElement) {
-    var top = el.offsetTop;
-    var left = el.offsetLeft;
-    var width = el.offsetWidth;
-    var height = el.offsetHeight;
+    let top = el.offsetTop;
+    let left = el.offsetLeft;
+    let width = el.offsetWidth;
+    let height = el.offsetHeight;
 
     while (el.offsetParent) {
         el = el.offsetParent as HTMLElement;
@@ -64,18 +65,18 @@ export function GetErrorMsg(apiError: any) {
     }
 }
 export function getRandomColor() {
-    var letters = '456789ABCD';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
+    let letters = '456789ABCD';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * letters.length)];
     }
     return color;
 }
 export function makeid(length) {
-    var result = [];
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
+    let result = [];
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
         result.push(characters.charAt(Math.floor(Math.random() *
             charactersLength)));
     }
@@ -96,19 +97,20 @@ export async function addQuery(that: Vue, key: string, val: string | string[]) {
         (k) => (query[k] = that.$route.query[k])
     );
     query[key] = val;
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     that.$router.replace({ query: query }).catch(() => { });
 }
 interface App {
-    refresh: boolean,
-    showLogin: (email: string) => void,
+    refresh: boolean;
+    showLogin: (email: string) => void;
     Prompt(msg: string,
-        timeout: number): void,
-    isUser: boolean,
-    showGroup: boolean,
-    logOut: () => Promise<void>,
-    userChanged: () => void
+        timeout: number): void;
+    isUser: boolean;
+    showGroup: boolean;
+    logOut: () => Promise<void>;
+    userChanged: () => void;
 }
-var app: App;
+let app: App;
 export function SetApp(params: App) {
     app = params;
 }
@@ -118,6 +120,12 @@ export function UserChanged() {
 export async function logOut() {
     await app.logOut();
 }
+export function ShowLogin(email: string = undefined) {
+    app.showLogin(email)
+}
+export function Prompt(msg: string, timeout: number) {
+    app.Prompt(msg, timeout)
+}
 export function NewGroup() {
     if (!app.isUser) {
         Prompt("Please login first!", 5000)
@@ -125,12 +133,6 @@ export function NewGroup() {
         return;
     }
     app.showGroup = true
-}
-export function ShowLogin(email: string = undefined) {
-    app.showLogin(email)
-}
-export function Prompt(msg: string, timeout: number) {
-    app.Prompt(msg, timeout)
 }
 export function ShowRefresh() {
     app.refresh = true;
@@ -180,7 +182,7 @@ export function GetTheme() {
         localStorage.getItem("darkTheme")
     ) as boolean;
 }
-export function SetTheme(dark: boolean, that: Vue, themes?: { light: VuetifyThemeVariant, dark: VuetifyThemeVariant }, user?: User) {
+export function SetTheme(dark: boolean, that: Vue, themes?: { light: VuetifyThemeVariant; dark: VuetifyThemeVariant }, user?: User) {
     that.$vuetify.theme.dark = dark;
     localStorage.setItem("darkTheme", String(that.$vuetify.theme.dark));
     if (themes) {
@@ -195,7 +197,7 @@ export function SetTheme(dark: boolean, that: Vue, themes?: { light: VuetifyThem
         UpdateUserInfo(user);
     }
 }
-export function SetThemeColors(that: Vue, themes?: { light: VuetifyThemeVariant, dark: VuetifyThemeVariant }) {
+export function SetThemeColors(that: Vue, themes?: { light: VuetifyThemeVariant; dark: VuetifyThemeVariant }) {
     for (const k in themes.dark) {
         that.$vuetify.theme.themes.dark[k] = themes.dark[k]
     }
@@ -205,16 +207,16 @@ export function SetThemeColors(that: Vue, themes?: { light: VuetifyThemeVariant,
 }
 
 
-export function ShareToQQ(param: { title: string, pic: string, summary: string, desc: string }) {
+export function ShareToQQ(param: { title: string; pic: string; summary: string; desc: string }) {
     window.open(`https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${encodeURIComponent(document.location.toString())}&sharesource=qzone&title=${param.title}&pics=${param.pic}&summary=${param.summary}`, "_blank")
 }
 export function GithubOauth() {
     window.location.replace("https://github.com/login/oauth/authorize?client_id=c9cb620eaea6bff97e5d")
 }
 export function GenerateTOC() {
-    var toc = "";
-    var level = 0;
-    var i = 0;
+    let toc = "";
+    let level = 0;
+    let i = 0;
     let first = true;
     const processFunc = function (str, openLevel, attrs, titleText, closeLevel) {
         if (openLevel != closeLevel) {
@@ -239,7 +241,7 @@ export function GenerateTOC() {
 
         level = parseInt(openLevel);
 
-        var anchor = titleText.replace(/ /g, "_") + Date.now() + i++;
+        let anchor = titleText.replace(/ /g, "_") + Date.now() + i++;
         toc += "<li><a href=\"#" + anchor + "\">" + `<div>${titleText}</div>`
             + "</a></li>";
 
@@ -300,7 +302,7 @@ export function GenerateTOC() {
             }
         })
     }, 100);
-};
+}
 export const BuildOnUserChange = (lazySearcher: LazyExecutor, dic: { [key: string]: Option }) => (a: { input: string; val: InputProp; cu: string[] }) => {
     a.val.input = a.input;
     if (!a.input) {

@@ -1,5 +1,6 @@
 export default {
     app: {
+        logo: '/logo-ps.png',
         home: '首页',
         myhome: '我的首页',
         newArticle: '提交课设作品',
@@ -37,8 +38,8 @@ export default {
         saved: '已保存！',
     },
     home: {
-        mo2: '课设分享平台 KSHub',
-        description: '分享、展示、学习、交流大学生课程设计作品'
+        mo2: 'KSHub',
+        description: '分享、展示、学习、交流大学生课程设计作品--专为优秀的电气学子打造'
     },
     account: {
         confirm: '确认',
@@ -88,7 +89,8 @@ export default {
         beautiful: '美丽',
         openSource: '开源',
         lowDelay: '低延迟',
-        noadv: '无广告'
+        noadv: '无广告',
+        title: '专为优秀的电气学子打造'
     },
     notFound: {
         notFound: '404 页面不存在!',

@@ -3,16 +3,17 @@
     <v-row justify="center">
       <v-img
         alt="Logo"
-        class="shrink mr-2"
+        class="shrink mr-2 invert-by-theme"
         contain
-        src="../assets/logo.png"
+        min-height="150"
+        :src="$t('app.logo')"
         transition="scale-transition"
         width="150"
       />
     </v-row>
     <v-row justify="center">
-      <v-col class="text-center text-h2" cols="12">
-        全心为用户打造的博客
+      <v-col class="text-center text-h3" cols="12">
+        {{$t('about.title')}}
       </v-col>
     </v-row>
     <v-row>
@@ -53,7 +54,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-col>
-      <v-divider v-if="!$vuetify.breakpoint.mobile" vertical />
+      <!-- <v-divider v-if="!$vuetify.breakpoint.mobile" vertical />
       <v-col cols="12" lg="5" class="text">
         <h1>我们创造Mo2的原因</h1>
         <p>你们有没有思考过，一个理想中的博客网站的形态？</p>
@@ -98,7 +99,7 @@
           而一点点Sponsorship更是可能会让我们晚上开心到睡不着觉。
         </p>
         <p>我们欢迎并期待你们的任何支持！</p>
-      </v-col>
+      </v-col> -->
     </v-row>
   </v-container>
 </template>

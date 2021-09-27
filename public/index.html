@@ -23,7 +23,9 @@
     body.pg-loaded>#app {
       display: block;
     }
-
+    .pg-loading-screen .pg-loading-logo-header img {
+      max-width: 200px;
+    }
     .spinner {
       width: 40px;
       height: 40px;
@@ -71,8 +73,12 @@
   </noscript>
   <script type="text/javascript" src="//cdn.mo2.leezeeyee.com/please-wait.min.js"></script>
   <script type="text/javascript">
+    let logo = "/logo.png";
+    if (document.location.host.includes('kshub')) {
+      logo = "/logo-ps.png";
+    }
     window.loading_screen = window.pleaseWait({
-      logo: "/logo.png",
+      logo: logo,
       backgroundColor: 'var(--v-primary-base)',
       loadingHtml: `
         <div class="spinner"></div>

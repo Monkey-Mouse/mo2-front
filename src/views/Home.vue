@@ -10,10 +10,10 @@
             @click="$router.push('/about')"
             class="display-1 font-weight-thin mb-4 clickable"
           >
-            MO2
+            {{$t('home.mo2')}}
           </h1>
           <h4 @click="$router.push('/about')" class="subheading clickable">
-            Blog site build for everyone, built by everyone
+            {{$t('home.description')}}
           </h4>
         </v-col>
       </v-row>

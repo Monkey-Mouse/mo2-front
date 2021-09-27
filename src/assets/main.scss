@@ -1,5 +1,11 @@
 @import "./sass/variables.scss";
 
+.theme--dark{
+  .invert-by-theme{
+    filter:invert(100%)
+  }
+}
+
 .mo2editor {
   p {
     margin: 0;
