@@ -7,3 +7,4 @@ data:
   default_branch: master
   docker_user_name_secret: docker_user_name # docker_user_name is not a placeholder, do not change this if you are using pivot studio's repo
   docker_pass_secret: docker_pass # docker_pass is not a placeholder, do not change this if you are using pivot studio's repo
+  api_key_secret: api_key
