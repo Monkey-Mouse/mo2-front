@@ -543,7 +543,7 @@ export default class App extends Vue {
       title: "app.about",
       icon: "mdi-alpha-a-circle",
       href: "/about",
-      show: !document.location.host.includes('kshub'),
+      show: true,
     },
   ];
   get isUser() {

@@ -163,7 +163,7 @@
                 }}</v-btn>
               </v-card-actions>
             </v-tab-item>
-            <v-tab-item :key="3" style="min-height: 150px">
+            <v-tab-item v-if="!kshub" :key="3" style="min-height: 150px">
               <v-row justify="center">
                 <v-col cols="12" align-self="center" class="text-center"
                   ><v-btn @click="github"
@@ -230,7 +230,9 @@ export default class AccountModal extends Vue {
     },
   };
   showPasswd: boolean = false;
-
+  public get kshub() : boolean {
+    return document.location.host.includes('kshub')
+  }
   public get regDisable(): boolean {
     return (
       this.$v.password.$anyError ||
