@@ -1,4 +1,6 @@
 # Mo2 front
+[![Build Status](https://drone.pivotstudio.cn/api/badges/Monkey-Mouse/mo2-front/status.svg)](https://drone.pivotstudio.cn/Monkey-Mouse/mo2-front)  
+
 
 Mo2的前端项目
 
