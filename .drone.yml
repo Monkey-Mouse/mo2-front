@@ -1,10 +1,110 @@
-kind: template
-load: motwo-vue-ac-pop.yml
-data:
-  deploy_file: deploy/mo2front.yaml
-  docker_repo: registry.cn-hangzhou.aliyuncs.com/mo2/mo2-front
-  docker_registry: registry.cn-hangzhou.aliyuncs.com
-  default_branch: master
-  docker_user_name_secret: docker_user_name # docker_user_name is not a placeholder, do not change this if you are using pivot studio's repo
-  docker_pass_secret: docker_pass # docker_pass is not a placeholder, do not change this if you are using pivot studio's repo
-  api_key_secret: api_key
+kind: pipeline
+type: kubernetes
+name: default
+trigger:
+  event:
+    - pull_request
+    - push
+steps:
+  - name: start comment
+    image: jmccann/drone-github-comment:1
+    settings:
+      message: <h2><a target="_blank" href="${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}/${DRONE_REPO}/${DRONE_BUILD_NUMBER}/">CI Is Running⌛⌛⌛</a></h2>  <b>click the link above for details </b>
+      update: true
+      api-key: 
+        from_secret: api_key
+
+    when:
+      ref:
+        include:
+        - refs/pull/**
+  - name: build 
+    image: node:14
+    commands:
+      - npm config set registry https://registry.npm.taobao.org
+      - npm install
+      - npm run build
+      - mv dist /home/dist
+    when:
+      ref:
+        include:
+        - refs/pull/**
+  - name: comment
+    image: jmccann/drone-github-comment:1
+    settings:
+      message: <h2><a href="${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}/${DRONE_REPO}/${DRONE_BUILD_NUMBER}">CI Success✔️✔️✔️</a></h2><b>click the link above for details</b>
+      update: true
+      api-key: 
+        from_secret: api_key
+
+    depends_on:
+      - "build"
+    when:
+      ref:
+        include:
+        - refs/pull/**
+  - name: failed comment
+    image: jmccann/drone-github-comment:1
+    settings:
+      message: <h2><a href="${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}/${DRONE_REPO}/${DRONE_BUILD_NUMBER}">CI Failed❌❌❌</a></h2><b>click the link above for details</b>
+      update: true
+      api-key: 
+        from_secret: api_key
+
+    depends_on:
+      - "build"
+    when:
+      ref:
+        include:
+        - refs/pull/**
+      status:
+      - failure
+  - name: ci build 
+    image: node:14
+    environment:
+      qiniuak:
+        from_secret: qiniuak
+      qiniusk:
+        from_secret: qiniusk
+    commands:
+      - npm config set registry https://registry.npm.taobao.org
+      - npm install
+      - npm run build
+      - mv dist /home/dist
+      - ./qiniu_uploader
+    when:
+      ref:
+        include:
+        - refs/heads/master
+  - name: docker  
+    image: plugins/docker
+    depends_on:
+      - "ci build"
+    settings:
+      username: 
+        from_secret: docker_user_name
+      password: 
+        from_secret: docker_pass
+      repo: registry.cn-hangzhou.aliyuncs.com/mo2/mo2-front
+      registry: registry.cn-hangzhou.aliyuncs.com
+      mirror: https://jtkrmusq.mirror.aliyuncs.com
+      tags:
+        - latest
+        - build-${DRONE_BUILD_NUMBER} 
+    when:
+      branch:
+       - master
+      event:
+      - push
+  - name: k8s cd
+    image: bh90210/dron8s:latest
+    depends_on:
+      - "docker"
+    settings:
+      yaml: deploy/mo2front.yaml
+      build_tag: build-${DRONE_BUILD_NUMBER}
+    when:
+      branch:
+      - master
+      event:
+      - push
