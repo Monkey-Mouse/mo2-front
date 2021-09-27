@@ -1,5 +1,5 @@
 kind: template
-load: go-ac-pot-cgo.yml
+load: mo2-vue-ac-pop.yml
 data:
   deploy_file: deploy/husthole.yaml
   docker_repo: registry.cn-hangzhou.aliyuncs.com/mo2/mo2-front
