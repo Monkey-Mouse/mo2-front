@@ -358,6 +358,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/camelcase */
 import Vue from "vue";
 import Component from "vue-class-component";
 import Editor from "../components/Editor/MO2Editor.vue";
