@@ -98,7 +98,7 @@ module.exports = {
     'vuetify'
   ],
   lintOnSave: true,
-  outputDir: path.resolve(__dirname, '../dist'),
+  outputDir: path.resolve(__dirname, './dist'),
   publicPath: process.env.NODE_ENV === 'production' ?
     '//cdn.mo2.leezeeyee.com/dist/' : '/',
   //publicPath: '/static',
