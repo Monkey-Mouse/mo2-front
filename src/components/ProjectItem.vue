@@ -5,10 +5,11 @@
     :width="this.$vuetify.breakpoint.smAndDown ? '70vw' : '50vw'"
     outlined
     light
+    :flat="flat"
     :style="'color:' + color + '!important'"
   >
     <v-list-item three-line>
-      <v-list-item-avatar tile size="80" color="grey">{{
+      <v-list-item-avatar tile :size="size" color="grey">{{
         initials
       }}</v-list-item-avatar>
       <v-list-item-content>
@@ -35,6 +36,11 @@ export default class ProjectItem extends Vue {
   project: Project;
   @Prop()
   color: string;
+  @Prop({default:false})
+  flat:boolean;
+
+  @Prop({default:80})
+  size:number;
   get initials(): string {
     try {
       return GetInitials(this.project.Name);

@@ -113,63 +113,71 @@ export default class EditArticle extends Vue {
     },
   };
   uploadMD = false;
-  inputProps: { [name: string]: InputProp } = {
-    title: {
-      errorMsg: {
-        required: "标题不可为空",
+  get inputProps(): { [name: string]: InputProp } {
+    return {
+      title: {
+        errorMsg: {
+          required: "标题不可为空",
+        },
+        label: "Title",
+        default: "",
+        icon: "mdi-format-title",
+        col: 12,
+        type: "text",
       },
-      label: "Title",
-      default: "",
-      icon: "mdi-format-title",
-      col: 12,
-      type: "text",
-    },
-    description: {
-      errorMsg: {
-        required: "描述不可为空",
-        min: "描述长度不小于8",
+      description: {
+        errorMsg: {
+          required: "描述不可为空",
+          min: "描述长度不小于8",
+        },
+        label: "Description",
+        default: "",
+        icon: "mdi-text",
+        col: 12,
+        type: "textarea",
       },
-      label: "Description",
-      default: "",
-      icon: "mdi-text",
-      col: 12,
-      type: "textarea",
-    },
-    cover: {
-      errorMsg: {},
-      label: "Cover",
-      default: {},
-      icon: "mdi-image",
-      col: 12,
-      type: "imgselector",
-    },
-    categories: {
-      errorMsg: {},
-      label: "Categories",
-      default: [],
-      col: 12,
-      options: [],
-      type: "select",
-      multiple: true,
-    },
-    project_id: {
-      errorMsg: {},
-      label: "Group",
-      default: "",
-      col: 12,
-      options: [],
-      type: "select",
-      multiple: false,
-    },
+      cover: {
+        errorMsg: {},
+        label: "Cover",
+        default: {},
+        icon: "mdi-image",
+        col: 12,
+        type: "imgselector",
+      },
+      categories: {
+        errorMsg: {},
+        label: "Categories",
+        default: [],
+        col: 12,
+        options: [],
+        type: "select",
+        multiple: true,
+      },
+      project_id: {
+        errorMsg: {},
+        label: this.$t("article.group").toString(),
+        default: "",
+        col: 12,
+        options: [],
+        type: "select",
+        multiple: false,
+      },
+    }
   };
 
   created() {
-    this.init();
-    const p1 = GetCates(this.user.id).then((data) => {
-      this.inputProps.categories.options = data.map((v, i, a) => {
-        return { text: v.name, value: v.id };
+    let p1 = null;
+    if (document.location.host.includes("kshub")) {
+      delete this.inputProps.categories;
+      this.init();
+    } else {
+      this.init();
+      p1 = GetCates(this.user.id).then((data) => {
+        this.inputProps.categories.options = data.map((v, i, a) => {
+          return { text: v.name, value: v.id };
+        });
       });
-    });
+    }
     const p2 = ListProject({ Page: 0, PageSize: 100, Uid: this.user.id }).then(
       (data) => {
         this.inputProps.project_id.options = data.map((v, i, a) => {

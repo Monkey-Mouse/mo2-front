@@ -106,7 +106,6 @@
             class="ml-1 mt-1"
             color="success"
             small
-            outlined
             @click="publishClick"
             >{{ $t("app.publish") }}</v-btn
           >
@@ -703,13 +702,13 @@ export default class App extends Vue {
     } else {
       this.$i18n.locale = "zh-CN";
     }
-    localStorage.setItem('lang',this.$i18n.locale)
+    localStorage.setItem("lang", this.$i18n.locale);
   }
   get isChinese() {
     return this.$i18n.locale === "zh-CN";
   }
   set isChinese(v: boolean) {
-    console.log(v)
+    console.log(v);
   }
 }
 </script>
