@@ -60,7 +60,8 @@ export default {
         delete: '删除',
         confirmDelete: '确认删除',
         restore: '恢复',
-        group: '课程组'
+        group: '课程组',
+        coauthor: '合作者'
     },
     recycle: {
         recycleBin: '回收站',

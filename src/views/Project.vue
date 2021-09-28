@@ -185,6 +185,7 @@ export default class ProjectPage extends Vue implements AutoLoader<BlogBrief> {
     return this.members.slice(0, 6 * this.memberPage);
   }
   buildProps() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     this.groupValidator = {
       name: {
@@ -284,6 +285,7 @@ export default class ProjectPage extends Vue implements AutoLoader<BlogBrief> {
   }
   selectXXX(ev, field: string) {
     const file = ev.target.files[0];
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     Papa.parse(file, {
       complete: async function (re) {
@@ -378,7 +380,6 @@ export default class ProjectPage extends Vue implements AutoLoader<BlogBrief> {
     this.buildProps();
     GetProject(this.$route.params["id"]).then((re) => {
       this.proj = re;
-      this.proj.MemberIDs = this.proj.MemberIDs;
       this.groupProps.name.default = this.proj.Name;
       this.groupProps.description.default = this.proj.Description;
       this.groupProps.tags.default = this.proj.Tags;

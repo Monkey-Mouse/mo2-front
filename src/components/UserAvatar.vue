@@ -1,5 +1,5 @@
 <template>
-  <v-tooltip bottom content-class="">
+  <v-tooltip :disabled="!enableHover" bottom content-class="">
     <template v-slot:activator="{ on, attrs }">
       <v-badge color="transparent" avatar overlap bottom>
         <template v-slot:badge>
@@ -8,7 +8,7 @@
             style="z-index: 3; position: relative"
             v-slot="{ hover }"
           >
-            <div v-on:click.prevent v-on:click.stop class="unclickable">
+            <div v-if="enableIcon" v-on:click.prevent v-on:click.stop class="unclickable">
               <v-avatar
                 :style="
                   (hover && enableEdit ? 'position:absolute;' : '') +
@@ -33,7 +33,7 @@
             </div>
           </v-hover>
         </template>
-        <v-avatar v-bind="attrs" v-on="on" :size="size" color="brown">
+        <v-avatar v-bind="attrs" v-on="on" :size="size" left color="brown">
           <v-img
             v-if="
               user.settings &&
@@ -50,7 +50,7 @@
                 ></v-progress-circular>
               </v-row> </template
           ></v-img>
-          <span v-else class="white--text headline">{{ initials }}</span>
+          <span v-else class="white--text ">{{ initials }}</span>
         </v-avatar>
       </v-badge>
     </template>
@@ -86,6 +86,10 @@ export default class Avatar extends Vue {
   size?: number;
   @Prop({ default: false })
   enableEdit!: boolean;
+  @Prop({default:true})
+  enableIcon!:boolean;
+  @Prop({default:true})
+  enableHover!:boolean;
   hov = false;
   get email() {
     return this.user.email.indexOf("@") > 0;

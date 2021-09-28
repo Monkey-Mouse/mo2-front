@@ -60,7 +60,8 @@ export default {
         delete: 'Delete',
         confirmDelete: 'Confirm Delete',
         restore: 'Restore',
-        group: 'Group'
+        group: 'Group',
+        coauthor: 'Co-Authors'
     },
     recycle: {
         recycleBin: 'Recycle Bin',

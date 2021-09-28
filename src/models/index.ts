@@ -37,6 +37,7 @@ export interface Blog extends BlogBrief {
     y_doc?: string;
     is_y_doc?: boolean;
     y_token?: string;
+    coauthors?: string[];
 }
 export const BlankBlog: Blog = {
     title: "",
@@ -64,6 +65,7 @@ export interface BlogUpsert {
     y_token?: string;
     authorId?: string;
     project_id?: string;
+    coauthors?: string[];
 }
 export interface UserSettings {
     avatar?: string;
@@ -99,7 +101,7 @@ export interface InputProp {
     iconClick?: (prop: InputProp) => void;
     onChange?: (c: any) => void;
     loading?: boolean;
-    filter?: (item: any, queryText: string, itemText: string) => void
+    filter?: (item: any, queryText: string, itemText: string) => void;
 }
 export interface Option {
     text: string;
@@ -138,7 +140,7 @@ export interface Comment extends SubComment {
     article?: string;
     subs?: SubComment[];
     tempC?: string;
-    showSub?: boolean
+    showSub?: boolean;
 }
 export interface Count {
     count: number;

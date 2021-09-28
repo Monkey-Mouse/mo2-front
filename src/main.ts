@@ -42,6 +42,9 @@ axios.interceptors.response.use(response => {
   }
   const reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
   if (error.response.data?.reason&&reg.test(error.response.data?.reason)) {
+    if (error.response.status===404&&error.config.url.includes('draft=true')) {
+      throw error;
+    }
     Prompt(GetErrorMsg(error),5000)
   }
   throw error;

@@ -53,20 +53,26 @@ import Component from "vue-class-component";
 import Editor from "../components/Editor/MO2Editor.vue";
 import MO2Dialog from "../components/MO2Dialog.vue";
 import {
+  BuildOnUserChange,
   GetArticle,
   GetCates,
   GetErrorMsg,
+  GetUserDatas,
+  LazyExecutor,
   ListProject,
   Prompt,
   UploadImgToQiniu,
   UploadMD,
   UpsertBlog,
   UpSertBlogSync,
+  UserFilter,
 } from "@/utils";
-import { BlogUpsert, InputProp, User } from "@/models";
+import { BlogUpsert, InputProp, User, Option } from "@/models";
 import { required, minLength } from "vuelidate/lib/validators";
 import { AxiosError } from "axios";
 import { Prop, Watch } from "vue-property-decorator";
+const lazySearcher = new LazyExecutor();
+const dic: { [key: string]: Option } = {};
 @Component({
   components: {
     Editor,
@@ -113,8 +119,10 @@ export default class EditArticle extends Vue {
     },
   };
   uploadMD = false;
-  get inputProps(): { [name: string]: InputProp } {
-    return {
+  inputProps: { [name: string]: InputProp } = {}
+  initinputProps() {
+    
+    this.inputProps = {
       title: {
         errorMsg: {
           required: "标题不可为空",
@@ -162,10 +170,24 @@ export default class EditArticle extends Vue {
         type: "select",
         multiple: false,
       },
+      coauthors: {
+        errorMsg: {},
+        label: this.$t("article.coauthor") as string,
+        default: [],
+        icon: "mdi-account",
+        col: 12,
+        type: "select",
+        options: [],
+        multiple: true,
+        showAvatar: true,
+        onChange: BuildOnUserChange(lazySearcher, dic),
+        filter: UserFilter,
+      },
     }
-  };
+  }
 
   created() {
+    this.initinputProps();
     let p1 = null;
     if (document.location.host.includes("kshub")) {
       delete this.inputProps.categories;
@@ -271,6 +293,20 @@ export default class EditArticle extends Vue {
         UpSertBlogSync({ draft: true }, this.blog);
       }
     };
+  }
+  @Watch("blog.coauthors")
+  managerChange() {
+    const re = this.blog.coauthors;
+    GetUserDatas(re).then((managers) => {
+      this.inputProps.coauthors.default = re ?? [];
+      for (let index = 0; index < managers.length; index++) {
+        const u = managers[index];
+        dic[u.id] = { text: u.name, value: u.id, avatar: u.settings?.avatar };
+      }
+      this.inputProps.coauthors.options = managers.map((u) => {
+        return { text: u.name, value: u.id, avatar: u.settings?.avatar };
+      });
+    });
   }
   beforeDestroy() {
     this.autoSave();
