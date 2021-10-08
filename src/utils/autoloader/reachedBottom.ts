@@ -19,7 +19,7 @@ function getScrollTop(): number {
  * 文档的总高度
  */
 function getScrollHeight(): number {
-    var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+    let scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
     let bSH = 0;
     if (document.body) {
         bSH = document.body.scrollHeight;
@@ -35,7 +35,7 @@ function getScrollHeight(): number {
  * 浏览器视口的高度
  */
 function getWindowHeight(): number {
-    var windowHeight = 0;
+    let windowHeight = 0;
     if (document.compatMode == "CSS1Compat") {
         windowHeight = document.documentElement.clientHeight;
     } else {
@@ -44,10 +44,10 @@ function getWindowHeight(): number {
     return windowHeight;
 }
 function checkVisible(elm: HTMLElement) {
-    var rect = elm.getBoundingClientRect();
+    let rect = elm.getBoundingClientRect();
     //获取当前浏览器的视口高度，不包括工具栏和滚动条
     //document.documentElement.clientHeight兼容 Internet Explorer 8、7、6、5
-    var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+    let viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
     //bottom top是相对于视口的左上角位置
     //bottom大于0或者top-视口高度小于0可见
     return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
@@ -55,12 +55,12 @@ function checkVisible(elm: HTMLElement) {
 /**
  * 滚动到最底部
  */
-export function reachedBottom(): boolean {
+export function reachedBottom(height?:number): boolean {
     let footer = document.getElementById('footer');
     if (footer) {
         return checkVisible(footer as HTMLElement);
     } else {
-        if (Math.abs(getScrollTop() + getWindowHeight() - getScrollHeight()) <= 10) {
+        if (Math.abs(getScrollTop() + getWindowHeight() - getScrollHeight()) <= height ?? 10) {
             return true;
         }
         return false;
