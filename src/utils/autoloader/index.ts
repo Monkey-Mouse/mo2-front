@@ -1,8 +1,8 @@
 import { AxiosError } from "axios";
 import { reachedBottom } from './reachedBottom'
 
-export function ReachedBottom(): boolean {
-    return reachedBottom();
+export function ReachedBottom(height?:number): boolean {
+    return reachedBottom(height);
 }
 export interface AutoLoader<T> {
     datalist: T[];
