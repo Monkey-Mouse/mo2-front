@@ -19,7 +19,7 @@ export class LazyExecutor {
                     f()
                 } else this.f();
             }
-        }, 200);
+        }, this.delay);
     }
 }
 export class SlowExecutor {
