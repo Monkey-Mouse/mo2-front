@@ -981,23 +981,23 @@ $color-grey: #dddddd;
   font-style: italic;
 }
 
-h1.is-empty:nth-child(1)::before {
-  content: "课程设计名称";
-  float: left;
-  color: #aaa;
-  pointer-events: none;
-  height: 0;
-  font-style: italic;
-}
+// h1.is-empty:nth-child(1)::before {
+//   content: "课程设计名称";
+//   float: left;
+//   color: #aaa;
+//   pointer-events: none;
+//   height: 0;
+//   font-style: italic;
+// }
 
-h1.is-empty:nth-child(1) + p.is-empty::before {
-  content: "课程设计介绍";
-  float: left;
-  color: #aaa;
-  pointer-events: none;
-  height: 0;
-  font-style: italic;
-}
+// h1.is-empty:nth-child(1) + p.is-empty::before {
+//   content: "课程设计介绍";
+//   float: left;
+//   color: #aaa;
+//   pointer-events: none;
+//   height: 0;
+//   font-style: italic;
+// }
 
 pre {
   white-space: pre !important;
