@@ -29,8 +29,6 @@ steps:
       GIN_MODE: release
     commands:
       - npm config set registry https://registry.npm.taobao.org
-      - rm package-lock.json
-      - npm cache clean --force
       - npm cache verify
       - npm install
       - npm run build
