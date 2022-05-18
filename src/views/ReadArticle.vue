@@ -129,8 +129,8 @@
                 type="list-item-avatar"
               ></v-skeleton-loader>
             </v-row>
-            <v-row v-if="coauthors.length>0" class=" mt-9">
-              <v-col md="3"  class=" ma-1" v-for="au in coauthors" :key="au.id">
+            <v-row v-if="coauthors.length > 0" class="mt-9">
+              <v-col md="3" class="ma-1" v-for="au in coauthors" :key="au.id">
                 <v-menu
                   bottom
                   right
@@ -138,12 +138,13 @@
                   origin="top left"
                 >
                   <template v-slot:activator="{ on }">
-                    <v-chip
-                      pill
-                      v-on="on"
-                    >
-                      <avatar :enableHover="false" :enableIcon="false" :user="au" />
-                      {{au.name}}
+                    <v-chip pill v-on="on">
+                      <avatar
+                        :enableHover="false"
+                        :enableIcon="false"
+                        :user="au"
+                      />
+                      {{ au.name }}
                     </v-chip>
                   </template>
                   <v-card width="300">
@@ -153,14 +154,13 @@
                           <avatar :enableHover="false" :user="au" />
                         </v-list-item-avatar>
                         <v-list-item-content>
-                          <v-list-item-title>{{au.name}}</v-list-item-title>
-                          <v-list-item-subtitle>{{au.email}}</v-list-item-subtitle>
+                          <v-list-item-title>{{ au.name }}</v-list-item-title>
+                          <v-list-item-subtitle>{{
+                            au.email
+                          }}</v-list-item-subtitle>
                         </v-list-item-content>
                         <v-list-item-action>
-                          <v-btn
-                            icon
-                            @click="menu = false"
-                          >
+                          <v-btn icon @click="menu = false">
                             <v-icon>mdi-close-circle</v-icon>
                           </v-btn>
                         </v-list-item-action>
@@ -171,16 +171,18 @@
                         <v-list-item-action>
                           <v-icon>mdi-briefcase</v-icon>
                         </v-list-item-action>
-                        <v-list-item-subtitle>{{au.email}}</v-list-item-subtitle>
+                        <v-list-item-subtitle>{{
+                          au.email
+                        }}</v-list-item-subtitle>
                       </v-list-item>
                     </v-list>
                   </v-card>
                 </v-menu>
               </v-col>
             </v-row>
-            <v-row v-if="proj&&proj.ID" class=" mt-9">
+            <v-row v-if="proj && proj.ID" class="mt-9">
               <v-col sm="6" cols="12">
-                <project-item :project="proj" :size="60" :flat="true"/>
+                <project-item :project="proj" :size="60" :flat="true" />
               </v-col>
             </v-row>
             <!-- <img
@@ -464,7 +466,7 @@ import ProjectItem from "../components/ProjectItem.vue";
     DeleteConfirm,
     TimeAgo,
     MO2Dialog,
-    ProjectItem
+    ProjectItem,
   },
 })
 export default class ReadArticle extends Vue {
@@ -550,7 +552,7 @@ export default class ReadArticle extends Vue {
   commentNum = 0;
   praiseNum = 0;
   liked = false;
-  coauthors: UserListData[]=[];
+  coauthors: UserListData[] = [];
 
   get isUser() {
     return this.user.roles && this.user.roles.indexOf(UserRole) >= 0;
@@ -650,7 +652,10 @@ export default class ReadArticle extends Vue {
   }
   @Watch("$route")
   articleChange() {
-    if (this.$route.path.startsWith('article/')&& this.$route.params["id"] !== this.blog.id) {
+    if (
+      this.$route.path.startsWith("article/") &&
+      this.$route.params["id"] !== this.blog.id
+    ) {
       this.init();
     }
   }
@@ -677,12 +682,12 @@ export default class ReadArticle extends Vue {
           this.author = u;
           this.authorLoad = true;
         });
-        GetUserDatas(this.blog.coauthors).then(co=>{
+        GetUserDatas(this.blog.coauthors).then((co) => {
           this.coauthors = co;
-        })
-        GetProject(val.project_id).then(p=>{
+        });
+        GetProject(val.project_id).then((p) => {
           this.proj = p;
-        })
+        });
         GetCommentNum(this.blog.id).then((c) => {
           this.commentNum = c.count;
         });
@@ -808,7 +813,7 @@ export default class ReadArticle extends Vue {
 }
 </style>
 <style scoped>
-@import url("https://cdn.jsdelivr.net/npm/katex@0.13.5/dist/katex.min.css");
+@import url("./css/katex.min.css");
 </style>
 <style lang="scss">
 .v-application {
