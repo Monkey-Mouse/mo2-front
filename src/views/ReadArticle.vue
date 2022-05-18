@@ -813,7 +813,7 @@ export default class ReadArticle extends Vue {
 }
 </style>
 <style scoped>
-@import url("./css/katex.min.css");
+@import url("/css/katex.min.css");
 </style>
 <style lang="scss">
 .v-application {
